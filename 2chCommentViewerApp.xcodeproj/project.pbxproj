@@ -1,0 +1,429 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		527B77351707CE68009D8187 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527B77341707CE68009D8187 /* UIKit.framework */; };
+		527B77371707CE68009D8187 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527B77361707CE68009D8187 /* Foundation.framework */; };
+		527B77391707CE68009D8187 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527B77381707CE68009D8187 /* CoreGraphics.framework */; };
+		527B773F1707CE68009D8187 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 527B773D1707CE68009D8187 /* InfoPlist.strings */; };
+		527B77411707CE68009D8187 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 527B77401707CE68009D8187 /* main.m */; };
+		527B77451707CE68009D8187 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 527B77441707CE68009D8187 /* AppDelegate.m */; };
+		527B774D1707CE68009D8187 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527B774C1707CE68009D8187 /* SenTestingKit.framework */; };
+		527B774E1707CE68009D8187 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527B77341707CE68009D8187 /* UIKit.framework */; };
+		527B774F1707CE68009D8187 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527B77361707CE68009D8187 /* Foundation.framework */; };
+		527B77571707CE68009D8187 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 527B77551707CE68009D8187 /* InfoPlist.strings */; };
+		527B775A1707CE68009D8187 /* _chCommentViewerAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 527B77591707CE68009D8187 /* _chCommentViewerAppTests.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		527B77501707CE68009D8187 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 527B77271707CE68009D8187 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 527B772F1707CE68009D8187;
+			remoteInfo = 2chCommentViewerApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		527B77301707CE68009D8187 /* 2chCommentViewerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 2chCommentViewerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		527B77341707CE68009D8187 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		527B77361707CE68009D8187 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		527B77381707CE68009D8187 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		527B773C1707CE68009D8187 /* 2chCommentViewerApp-Info.plist */ = {isa = PBXFileReference; path = "2chCommentViewerApp-Info.plist"; sourceTree = "<group>"; };
+		527B773E1707CE68009D8187 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		527B77401707CE68009D8187 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		527B77421707CE68009D8187 /* 2chCommentViewerApp-Prefix.pch */ = {isa = PBXFileReference; path = "2chCommentViewerApp-Prefix.pch"; sourceTree = "<group>"; };
+		527B77431707CE68009D8187 /* AppDelegate.h */ = {isa = PBXFileReference; path = AppDelegate.h; sourceTree = "<group>"; };
+		527B77441707CE68009D8187 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		527B774B1707CE68009D8187 /* 2chCommentViewerAppTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = 2chCommentViewerAppTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		527B774C1707CE68009D8187 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		527B77541707CE68009D8187 /* 2chCommentViewerAppTests-Info.plist */ = {isa = PBXFileReference; path = "2chCommentViewerAppTests-Info.plist"; sourceTree = "<group>"; };
+		527B77561707CE68009D8187 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		527B77581707CE68009D8187 /* _chCommentViewerAppTests.h */ = {isa = PBXFileReference; path = _chCommentViewerAppTests.h; sourceTree = "<group>"; };
+		527B77591707CE68009D8187 /* _chCommentViewerAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _chCommentViewerAppTests.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		527B772D1707CE68009D8187 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				527B77351707CE68009D8187 /* UIKit.framework in Frameworks */,
+				527B77371707CE68009D8187 /* Foundation.framework in Frameworks */,
+				527B77391707CE68009D8187 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		527B77471707CE68009D8187 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				527B774D1707CE68009D8187 /* SenTestingKit.framework in Frameworks */,
+				527B774E1707CE68009D8187 /* UIKit.framework in Frameworks */,
+				527B774F1707CE68009D8187 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		527B77251707CE68009D8187 = {
+			isa = PBXGroup;
+			children = (
+				527B773A1707CE68009D8187 /* 2chCommentViewerApp */,
+				527B77521707CE68009D8187 /* 2chCommentViewerAppTests */,
+				527B77331707CE68009D8187 /* Frameworks */,
+				527B77311707CE68009D8187 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		527B77311707CE68009D8187 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				527B77301707CE68009D8187 /* 2chCommentViewerApp.app */,
+				527B774B1707CE68009D8187 /* 2chCommentViewerAppTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		527B77331707CE68009D8187 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				527B77341707CE68009D8187 /* UIKit.framework */,
+				527B77361707CE68009D8187 /* Foundation.framework */,
+				527B77381707CE68009D8187 /* CoreGraphics.framework */,
+				527B774C1707CE68009D8187 /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		527B773A1707CE68009D8187 /* 2chCommentViewerApp */ = {
+			isa = PBXGroup;
+			children = (
+				527B77431707CE68009D8187 /* AppDelegate.h */,
+				527B77441707CE68009D8187 /* AppDelegate.m */,
+				527B773B1707CE68009D8187 /* Supporting Files */,
+			);
+			path = 2chCommentViewerApp;
+			sourceTree = "<group>";
+		};
+		527B773B1707CE68009D8187 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				527B773C1707CE68009D8187 /* 2chCommentViewerApp-Info.plist */,
+				527B773D1707CE68009D8187 /* InfoPlist.strings */,
+				527B77401707CE68009D8187 /* main.m */,
+				527B77421707CE68009D8187 /* 2chCommentViewerApp-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		527B77521707CE68009D8187 /* 2chCommentViewerAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				527B77581707CE68009D8187 /* _chCommentViewerAppTests.h */,
+				527B77591707CE68009D8187 /* _chCommentViewerAppTests.m */,
+				527B77531707CE68009D8187 /* Supporting Files */,
+			);
+			path = 2chCommentViewerAppTests;
+			sourceTree = "<group>";
+		};
+		527B77531707CE68009D8187 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				527B77541707CE68009D8187 /* 2chCommentViewerAppTests-Info.plist */,
+				527B77551707CE68009D8187 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		527B772F1707CE68009D8187 /* 2chCommentViewerApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 527B775D1707CE68009D8187 /* Build configuration list for PBXNativeTarget "2chCommentViewerApp" */;
+			buildPhases = (
+				527B772C1707CE68009D8187 /* Sources */,
+				527B772D1707CE68009D8187 /* Frameworks */,
+				527B772E1707CE68009D8187 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = 2chCommentViewerApp;
+			productName = 2chCommentViewerApp;
+			productReference = 527B77301707CE68009D8187 /* 2chCommentViewerApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		527B774A1707CE68009D8187 /* 2chCommentViewerAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 527B77601707CE68009D8187 /* Build configuration list for PBXNativeTarget "2chCommentViewerAppTests" */;
+			buildPhases = (
+				527B77461707CE68009D8187 /* Sources */,
+				527B77471707CE68009D8187 /* Frameworks */,
+				527B77481707CE68009D8187 /* Resources */,
+				527B77491707CE68009D8187 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				527B77511707CE68009D8187 /* PBXTargetDependency */,
+			);
+			name = 2chCommentViewerAppTests;
+			productName = 2chCommentViewerAppTests;
+			productReference = 527B774B1707CE68009D8187 /* 2chCommentViewerAppTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		527B77271707CE68009D8187 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = unkoCopratiion;
+			};
+			buildConfigurationList = 527B772A1707CE68009D8187 /* Build configuration list for PBXProject "2chCommentViewerApp" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 527B77251707CE68009D8187;
+			productRefGroup = 527B77311707CE68009D8187 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				527B772F1707CE68009D8187 /* 2chCommentViewerApp */,
+				527B774A1707CE68009D8187 /* 2chCommentViewerAppTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		527B772E1707CE68009D8187 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				527B773F1707CE68009D8187 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		527B77481707CE68009D8187 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				527B77571707CE68009D8187 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		527B77491707CE68009D8187 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		527B772C1707CE68009D8187 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				527B77411707CE68009D8187 /* main.m in Sources */,
+				527B77451707CE68009D8187 /* AppDelegate.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		527B77461707CE68009D8187 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				527B775A1707CE68009D8187 /* _chCommentViewerAppTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		527B77511707CE68009D8187 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 527B772F1707CE68009D8187 /* 2chCommentViewerApp */;
+			targetProxy = 527B77501707CE68009D8187 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		527B773D1707CE68009D8187 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				527B773E1707CE68009D8187 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		527B77551707CE68009D8187 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				527B77561707CE68009D8187 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		527B775B1707CE68009D8187 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		527B775C1707CE68009D8187 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		527B775E1707CE68009D8187 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "2chCommentViewerApp/2chCommentViewerApp-Prefix.pch";
+				INFOPLIST_FILE = "2chCommentViewerApp/2chCommentViewerApp-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		527B775F1707CE68009D8187 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "2chCommentViewerApp/2chCommentViewerApp-Prefix.pch";
+				INFOPLIST_FILE = "2chCommentViewerApp/2chCommentViewerApp-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		527B77611707CE68009D8187 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/2chCommentViewerApp.app/2chCommentViewerApp";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "2chCommentViewerApp/2chCommentViewerApp-Prefix.pch";
+				INFOPLIST_FILE = "2chCommentViewerAppTests/2chCommentViewerAppTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		527B77621707CE68009D8187 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/2chCommentViewerApp.app/2chCommentViewerApp";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(DEVELOPER_LIBRARY_DIR)/Frameworks",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "2chCommentViewerApp/2chCommentViewerApp-Prefix.pch";
+				INFOPLIST_FILE = "2chCommentViewerAppTests/2chCommentViewerAppTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		527B772A1707CE68009D8187 /* Build configuration list for PBXProject "2chCommentViewerApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				527B775B1707CE68009D8187 /* Debug */,
+				527B775C1707CE68009D8187 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		527B775D1707CE68009D8187 /* Build configuration list for PBXNativeTarget "2chCommentViewerApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				527B775E1707CE68009D8187 /* Debug */,
+				527B775F1707CE68009D8187 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		527B77601707CE68009D8187 /* Build configuration list for PBXNativeTarget "2chCommentViewerAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				527B77611707CE68009D8187 /* Debug */,
+				527B77621707CE68009D8187 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 527B77271707CE68009D8187 /* Project object */;
+}
