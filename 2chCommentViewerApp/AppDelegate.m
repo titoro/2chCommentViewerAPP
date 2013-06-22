@@ -11,11 +11,22 @@
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize cvChannelListController = _cvChannelListController;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    //
+    _cvChannelListController = [[CVChannelListController alloc]init];
+    
+    //ナビゲーションコントローラを追加
+    UINavigationController *navigationController = [[UINavigationController alloc]initWithRootViewController:_cvChannelListController];
+    
+    //ルートコントローラにナビゲーションコントローラを指定
+    self.window.rootViewController = navigationController;
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
