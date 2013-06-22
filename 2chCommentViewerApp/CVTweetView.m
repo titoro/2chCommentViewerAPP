@@ -270,6 +270,7 @@ extern NSString *touchedTable;
                                         [params setObject:@"1" forKey:@"include_entities"];
                                         [params setObject:@"1" forKey:@"include_rts"];
                                         
+                                        //iOS6非推奨の為Social Frameworkを使ったものに変更しろ
                                         TWRequest *request = [[TWRequest alloc] initWithURL:url
                                                                                  parameters:params
                                                                               requestMethod:TWRequestMethodGET];
