@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5208A164177B9F5500B76980 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5208A163177B9F5500B76980 /* Social.framework */; };
 		520A600E174DCF76002D32E3 /* CVTweetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 520A600D174DCF75002D32E3 /* CVTweetView.m */; };
 		520A6010174F2081002D32E3 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 520A600F174F2081002D32E3 /* Accounts.framework */; };
 		520A6012174F2090002D32E3 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 520A6011174F2090002D32E3 /* Twitter.framework */; };
@@ -57,6 +58,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5208A163177B9F5500B76980 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		520A600C174DCF75002D32E3 /* CVTweetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVTweetView.h; sourceTree = "<group>"; };
 		520A600D174DCF75002D32E3 /* CVTweetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVTweetView.m; sourceTree = "<group>"; };
 		520A600F174F2081002D32E3 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
@@ -128,6 +130,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5208A164177B9F5500B76980 /* Social.framework in Frameworks */,
 				520A6012174F2090002D32E3 /* Twitter.framework in Frameworks */,
 				520A6010174F2081002D32E3 /* Accounts.framework in Frameworks */,
 				527B77351707CE68009D8187 /* UIKit.framework in Frameworks */,
@@ -152,6 +155,7 @@
 		527B77251707CE68009D8187 = {
 			isa = PBXGroup;
 			children = (
+				5208A163177B9F5500B76980 /* Social.framework */,
 				525ACE5017659CC5005A5C3F /* Default-568h@2x.png */,
 				520A6011174F2090002D32E3 /* Twitter.framework */,
 				520A600F174F2081002D32E3 /* Accounts.framework */,

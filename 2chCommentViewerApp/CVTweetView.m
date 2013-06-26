@@ -77,9 +77,26 @@ extern NSString *touchedTable;
 		}
 	}];
     
+    //test
+    [self tweetMessage];
+    
     //タイムラインを表示
     [self loadTimeline];
     
+}
+
+//soial.frameworkを使ってツイート
+-(void)tweetMessage{
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) { //利用可能チェック
+        NSString *serviceType = SLServiceTypeTwitter;
+        SLComposeViewController *composeCtl = [SLComposeViewController composeViewControllerForServiceType:serviceType];
+        [composeCtl setCompletionHandler:^(SLComposeViewControllerResult result) {
+            if (result == SLComposeViewControllerResultDone) {
+                //投稿成功時の処理
+            }
+        }];
+        [self presentViewController:composeCtl animated:YES completion:nil];
+    }
 }
 
 //twitter OAuth Request

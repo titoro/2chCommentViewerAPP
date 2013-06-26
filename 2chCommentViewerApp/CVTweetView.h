@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Social/Social.h"
 #import "CVChannelListController.h"
 #import "CVTweetTableViewController.h"
 #import <Twitter/TWRequest.h>
