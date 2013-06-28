@@ -37,7 +37,7 @@
     
     //チャンネルをテスト用に指定
     _channels = [[NSMutableArray alloc]initWithObjects:@"NHK教育",@"TBS",@"テレビ朝日",
-                            @"日本テレビ",@"フジテレビ",@"テレビ東京",@"タイムライン", nil];
+                            @"日本テレビ",@"フジテレビ",@"テレビ東京",@"Twitterタイムライン", nil];
     
     //チャンネルを取得したかどうかの判定
     if(!_channels){

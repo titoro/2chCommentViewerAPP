@@ -135,7 +135,7 @@ NSString *touchedTable;
     //テスト
     CVChannel *cvChannel = [[CVChannel alloc]init];
     int channelCount = cvChannel.channels.count;
-    NSLog(@"%d",cvChannel.channels.count);
+//    NSLog(@"%d",cvChannel.channels.count);
     return channelCount;
 }
 

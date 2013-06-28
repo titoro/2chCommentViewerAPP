@@ -27,12 +27,15 @@
     NSMutableArray *userNameArray;
     NSMutableArray *tweetTextArray;
     ACAccount *account;
-    ACAccountType *accountType;
-    ACAccountStore *accountStore;
+//    ACAccountType *accountType;
+//    ACAccountStore *accountStore;
     
     UITableViewStyle style;
 }
 @property (strong,nonatomic) CVTweetView *detailView;
+@property (strong,nonatomic) UITableView *tableView;
+@property (strong,nonatomic) ACAccountStore *accountStore;
+@property (strong,nonatomic) NSMutableArray *grantedAccounts;
 // 必要なら追加。
 //@property (nonatomic, retain) UITableView *tableView;
 //ACCount identifer Record
@@ -61,7 +64,7 @@
 
 //- (NSArray *)fetchAccounts;
 
-- (void)tweet:(NSString *)message;
+-(void)tweetOAuth:(NSString *)message;
 
-- (void)loadTimeline;
+//- (void)loadTimeline;
 @end
