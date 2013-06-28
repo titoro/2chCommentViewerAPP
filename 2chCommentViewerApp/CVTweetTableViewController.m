@@ -80,42 +80,44 @@
     return cell;
 }
 
+/*ここでの実装をいったんおいて考えるためコメントアウト*/
 - (void)loadTimeline{
     
-    [accountStore requestAccessToAccountsWithType:accountType
-                            withCompletionHandler:^(BOOL granted, NSError *error) {
-    if (granted) {
-                                    
-            if (account == nil) {
-                    NSArray *accountArray = [accountStore accountsWithAccountType:accountType];
-                    account = [accountArray objectAtIndex:0];
-            }
-                                    
-            if (account != nil) {
-            NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=hiro_JL5 "];
-            NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-            [params setObject:@"20" forKey:@"count"];
-            [params setObject:@"1" forKey:@"include_entities"];
-            [params setObject:@"1" forKey:@"include_rts"];
-                
-            TWRequest *request = [[TWRequest alloc] initWithURL:url
-                                                    parameters:params
-                                                    requestMethod:TWRequestMethodGET];
-            [request setAccount:account];
-            [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-                    
-                    if (responseData) {
-                        NSError *jsonError;
-                        NSArray *timeline = [NSJSONSerialization JSONObjectWithData:responseData
-                                                                            options:NSJSONReadingMutableLeaves error:&jsonError];
-                        NSLog(@"%@", timeline);
-                    }
-                    
-                }];
-            }
-            }
-                            }];
     
+//    [accountStore requestAccessToAccountsWithType:accountType
+//                            withCompletionHandler:^(BOOL granted, NSError *error) {
+//    if (granted) {
+//                                    
+//            if (account == nil) {
+//                    NSArray *accountArray = [accountStore accountsWithAccountType:accountType];
+//                    account = [accountArray objectAtIndex:0];
+//            }
+//                                    
+//            if (account != nil) {
+//            NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/user_timeline.json?user_id=hiro_JL5 "];
+//            NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+//            [params setObject:@"20" forKey:@"count"];
+//            [params setObject:@"1" forKey:@"include_entities"];
+//            [params setObject:@"1" forKey:@"include_rts"];
+//                
+//            TWRequest *request = [[TWRequest alloc] initWithURL:url
+//                                                    parameters:params
+//                                                    requestMethod:TWRequestMethodGET];
+//            [request setAccount:account];
+//            [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+//                    
+//                    if (responseData) {
+//                        NSError *jsonError;
+//                        NSArray *timeline = [NSJSONSerialization JSONObjectWithData:responseData
+//                                                                            options:NSJSONReadingMutableLeaves error:&jsonError];
+//                        NSLog(@"%@", timeline);
+//                    }
+//                    
+//                }];
+//            }
+//            }
+//    }];
+//    
 }
 
 /*

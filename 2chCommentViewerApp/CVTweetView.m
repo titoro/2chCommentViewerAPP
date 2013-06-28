@@ -16,6 +16,16 @@ extern NSString *touchedTable;
 
 @synthesize accountId = _accountId;
 @synthesize detailView = _detailView;
+//@synthesize tableView;
+
+- (id)initWithStyle:(UITableViewStyle)theStyle
+{
+    self = [super init];    // xib ファイルは使わないと仮定。
+    if (self != nil) {
+        style = theStyle;
+    }
+    return self;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -24,6 +34,32 @@ extern NSString *touchedTable;
         // Custom initialization
     }
     return self;
+}
+
+-(void)loadView{
+    //この下にビューの初期化処理
+    //今はテスト
+    //ビューのインスタンスを取得する
+    //UIView* view = [[UIView alloc]initWithFrame:CGRectZero];
+    
+    //タイムラインを取得
+    [self loadTimelineTw];
+    
+    // view の frame は親に追加された時に調整されるので、何でも良い。
+    UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
+    
+    // tableView の frame は view.bounds 全体と仮定。他の UI 部品を配置する場合は要調整。
+    UITableView *tableView = [[UITableView alloc] initWithFrame:view.bounds style:style];
+    tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    tableView.dataSource = self;
+    tableView.delegate = self;
+    [view addSubview:tableView];
+    
+    // 必要に応じて、ここで他の UI 部品を生成。
+    
+    //viewプロパティに設定
+    self.view = view;
+    
 }
 
 - (void)viewDidLoad
@@ -64,28 +100,29 @@ extern NSString *touchedTable;
     accountStore = [[ACAccountStore alloc]init];
 	accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
 	
-	[accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
-		if(granted)
-		{
-			NSArray *accounts = [accountStore accountsWithAccountType:accountType];
-			if([accounts count] > 0)
-			{
-				account = [accounts objectAtIndex:0];
-				self.accountId = account.identifier;
-                NSLog(@"%@",account);
-			}
-		}
-	}];
+//	[accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
+//		if(granted)
+//		{
+//			NSArray *accounts = [accountStore accountsWithAccountType:accountType];
+//			if([accounts count] > 0)
+//			{
+//				account = [accounts objectAtIndex:0];
+//				self.accountId = account.identifier;
+//                NSLog(@"%@",account);
+//			}
+//		}
+//	}];
     
     //test
-    [self tweetMessage];
+    //[self tweetMessage];
     
-    //タイムラインを表示
-    [self loadTimeline];
+    self.title = @"タイムライン";
     
 }
 
 //soial.frameworkを使ってツイート
+//ツイッター表示画面からのツイートに使用する予定
+//クラス構造考える必要がある
 -(void)tweetMessage{
     if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]) { //利用可能チェック
         NSString *serviceType = SLServiceTypeTwitter;
@@ -205,8 +242,19 @@ extern NSString *touchedTable;
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     
     // Configure the cell...
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    NSLog(@"%@",userNameArray);
+    NSLog(@"%@",tweetTextArray);
+    cell.textLabel.text = [userNameArray objectAtIndex:indexPath.row];
+    cell.detailTextLabel.text = [tweetTextArray objectAtIndex:indexPath.row];
+//    
+//    return cell;
     
     return cell;
+
 }
 
 //twitteAccountの取得
@@ -226,6 +274,78 @@ extern NSString *touchedTable;
 ////    return account;
 //}
 
+//画面の初期化終了、ユーザ定義を行う
+//twitterのタイムラインの取得
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification{
+    ACAccountStore *accountStoreTw = [[ACAccountStore alloc]init];
+    ACAccountType *accountTypeTw = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    [accountStoreTw requestAccessToAccountsWithType:accountTypeTw options:nil completion:^(BOOL granted, NSError *error) {
+        if(granted){
+            NSArray *accounts = [self->accountStore accountsWithAccountType:accountType];
+            
+            if (accounts != nil && [accounts count] != 0) {
+                ACAccount *twAccount = [accounts objectAtIndex:0];
+                NSURL *url = [NSURL URLWithString:@"http://twitter.com/1/statuses/public_timeline.format"];
+                    NSDictionary *params = [NSDictionary dictionaryWithObject:@"1" forKey:@"include_entities"];
+                SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:url parameters:params];
+                request.account = twAccount;
+                [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+                    if (urlResponse){
+                        NSError *jsonError;
+                        NSArray *timeline = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:&jsonError];
+                        if(timeline){
+//                            NSString *output = [NSString stringWithFormat:@"HTTP response status: %ld",[urlResponse statusCode]];
+//                            NSLog(@"%@", output);
+                            NSLog(@"%@",timeline);
+                        }else{
+                            NSLog(@"error: %@",jsonError);
+                        }
+                    }
+                }];
+            }
+        }
+    }];
+}
+
+//Twitterのタイムラインを取得する
+-(void)loadTimelineTw{
+    ACAccountStore *accountStoreTw = [[ACAccountStore alloc]init];
+    ACAccountType *accountTypeTw = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    [accountStoreTw requestAccessToAccountsWithType:accountTypeTw options:nil completion:^(BOOL granted, NSError *error) {
+        if(granted){
+            NSArray *accounts = [self->accountStore accountsWithAccountType:accountType];
+            
+            if (accounts != nil && [accounts count] != 0) {
+                ACAccount *twAccount = [accounts objectAtIndex:0];
+                NSURL *url = [NSURL URLWithString:@"http://twitter.com/1/statuses/public_timeline.format"];
+                NSDictionary *params = [NSDictionary dictionaryWithObject:@"1" forKey:@"include_entities"];
+                SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:url parameters:params];
+                request.account = twAccount;
+                [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
+                    if (urlResponse){
+                        NSError *jsonError;
+                        NSArray *timeline = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:&jsonError];
+                        if(timeline){
+                            NSString *output = [NSString stringWithFormat:@"HTTP response status: %ld",(long)[urlResponse statusCode]];
+                            NSLog(@"%@", output);
+                            NSLog(@"%@",timeline);
+                            
+                            for (NSDictionary *tweet in timeline) {
+                                [tweetTextArray addObject:[tweet objectForKey:@"text"]];
+                                NSDictionary *user = [tweet objectForKey:@"user"];
+                                [userNameArray addObject:[user objectForKey:@"screen_name"]];
+                            }
+                        }else{
+                            NSLog(@"error: %@",jsonError);
+                        }
+                    }
+                }];
+            }
+        }
+    }];
+}
+
+//twitterのタイムラインをテーブル形式で表示させる。メソッド名はあとで書き換える
 - (void)loadTimeline{
 	
     //未認可のリクエストトークンをtwitterから取得
@@ -281,16 +401,22 @@ extern NSString *touchedTable;
                                     }
                                     
                                     if (account != nil) {
-//                                        NSURL *url = [NSURL URLWithString:@"http://api.twitter.com/1.1/statuses/firehose"];
+                                        NSURL *url = [NSURL URLWithString:@"h‌ttp://api.twitter.com/1.1/statuses/home_timeline.json"];
                                         NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
                                         [params setObject:@"20" forKey:@"count"];
                                         [params setObject:@"1" forKey:@"include_entities"];
                                         [params setObject:@"1" forKey:@"include_rts"];
                                         
-                                        //iOS6非推奨の為Social Frameworkを使ったものに変更しろ
-                                        TWRequest *request = [[TWRequest alloc] initWithURL:url
-                                                                                 parameters:params
-                                                                              requestMethod:TWRequestMethodGET];
+                                        //iOS6非推奨の為Social Frameworkを使ったものに変更
+//                                        TWRequest *request = [[TWRequest alloc] initWithURL:url
+//                                                                                 parameters:params
+//                                                                              requestMethod:TWRequestMethodGET];
+                                        
+                                        SLRequest *request = [SLRequest requestForServiceType:
+                                                                                SLServiceTypeFacebook
+                                            requestMethod:SLRequestMethodPOST
+                                            URL:url
+                                            parameters:params];
                                         [request setAccount:account];
                                         [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
                                             

@@ -21,7 +21,7 @@
 //こっちはクラス変数？
 @class CVTweetTableViewController;
 
-@interface CVTweetView : UIViewController{
+@interface CVTweetView : UIViewController<UITableViewDelegate,UITableViewDataSource>{
     //ここはインスタンス変数
     CVTweetTableViewController *cvTweetTable;
     NSMutableArray *userNameArray;
@@ -30,9 +30,11 @@
     ACAccountType *accountType;
     ACAccountStore *accountStore;
     
+    UITableViewStyle style;
 }
 @property (strong,nonatomic) CVTweetView *detailView;
-
+// 必要なら追加。
+//@property (nonatomic, retain) UITableView *tableView;
 //ACCount identifer Record
 @property (atomic,retain) NSString *accountId;
 

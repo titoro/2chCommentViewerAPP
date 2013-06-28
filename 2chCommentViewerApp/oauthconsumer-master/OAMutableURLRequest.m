@@ -125,7 +125,8 @@ signatureProvider:(id<OASignatureProviding>)aProvider
 
 - (void)_generateTimestamp {
 	//[timestamp release];
-    timestamp = [[NSString alloc]initWithFormat:@"%d", time(NULL)];
+    /*下記警告文をそのまま修正したら警告消えたけど不安なのでここにコメント*/
+    timestamp = [[NSString alloc]initWithFormat:@"%ld", time(NULL)];
 }
 
 - (void)_generateNonce {

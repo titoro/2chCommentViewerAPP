@@ -36,7 +36,7 @@
     //2chの番組板から取得してきた情報を使う
     //test code
     channels = [[NSArray alloc]initWithObjects:@"NHK教育",@"TBS",@"テレビ朝日",
-                                        @"日本テレビ",@"フジテレビ",@"テレビ東京", nil];
+                                        @"日本テレビ",@"フジテレビ",@"テレビ東京", @"twitterタイムライン", nil];
 }
 
 - (void)viewDidUnload
