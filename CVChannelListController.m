@@ -181,7 +181,7 @@ NSString *touchedTable;
     //Twitterタイムライン
     NSString* twitterTimeline = @"ツイッター タイムライン";
     
-    touchedTable = str;
+//    touchedTable = str;
     
     //Twitterタイムラインセル選択時タイムライン表示画面へ
     if ([str isEqualToString:twitterTimeline]) {
