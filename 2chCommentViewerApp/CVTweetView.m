@@ -19,6 +19,7 @@ extern NSString *touchedTable;
 @synthesize accountStore = _accountStore;
 @synthesize grantedAccounts = _grantedAccounts;
 @synthesize tableView;
+//@synthesize tweetArray;
 
 - (id)initWithStyle:(UITableViewStyle)theStyle
 {
@@ -46,7 +47,7 @@ extern NSString *touchedTable;
     
 //    userNameArray = [[NSMutableArray alloc] initWithCapacity:0];
 //    tweetTextArray = [[NSMutableArray alloc] initWithCapacity:0];
-//    
+//
 //    _accountStore = [[ACAccountStore alloc]init];
 //	accountType = [_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     
@@ -59,6 +60,10 @@ extern NSString *touchedTable;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view
+    tweetreloaded = NO;
+    
+    userNameArray = [[NSMutableArray alloc] initWithCapacity:0];
+    tweetTextArray = [[NSMutableArray alloc] initWithCapacity:0];
     
     // view の frame は親に追加された時に調整されるので、何でも良い。
     UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
@@ -192,18 +197,42 @@ extern NSString *touchedTable;
     
     // Configure the cell...
     if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     
     //NSLog(@"%@",userNameArray);
     //NSLog(@"%@",tweetTextArray);
     //cell.textLabel.text = @"test";
-    cell.textLabel.text = [userNameArray objectAtIndex:indexPath.row];
-    cell.detailTextLabel.text = [tweetTextArray objectAtIndex:indexPath.row];
+    if(!tweetreloaded){
+        return cell;
+        
+    }
     //cell.textLabel.text = [tweetTextArray objectAtIndex:indexPath.row];
+    cell.textLabel.font =[UIFont systemFontOfSize:11];
+    cell.textLabel.numberOfLines = 0;
+    cell.detailTextLabel.text = [userNameArray objectAtIndex:indexPath.row];
+    cell.textLabel.text = [tweetTextArray objectAtIndex:indexPath.row];
     
     return cell;
 
+}
+
+// セルの高さを返す. セルが生成される前に実行されるので独自に計算する必要がある
+- (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath {
+	if(!tweetreloaded){
+        return 50;
+    }
+    UITableViewCell *cell = [self tableView:self.tableView cellForRowAtIndexPath:indexPath];
+	CGSize bounds = CGSizeMake(self.tableView.frame.size.width, self.tableView.frame.size.height);
+    //textLabelのサイズ
+ 	CGSize size = [cell.textLabel.text sizeWithFont:cell.textLabel.font
+                                  constrainedToSize:bounds
+                                      lineBreakMode:NSLineBreakByCharWrapping];
+    //detailTextLabelのサイズ
+	CGSize detailSize = [cell.detailTextLabel.text sizeWithFont: cell.detailTextLabel.font
+                                              constrainedToSize: bounds
+                                                  lineBreakMode: NSLineBreakByCharWrapping];
+    return size.height + detailSize.height + 35;
 }
 
 //画面の初期化終了、ユーザ定義を行う
@@ -354,12 +383,20 @@ extern NSString *touchedTable;
                         if(timeline){
                             NSString *output = [NSString stringWithFormat:@"HTTP response status: %ld",(long)[urlResponse statusCode]];
                             NSLog(@"%@", output);
-                            NSLog(@"%@",timeline);
+                            //NSLog(@"%@",timeline);
                             for (NSDictionary *tweet in timeline) {
+//                                NSString *str = [tweet objectForKey:@"text"];
+//                                NSLog(@"%@",str);
+//                                [tweetArray addObject:str];
                                 [tweetTextArray addObject:[tweet objectForKey:@"text"]];
                                 NSDictionary *user = [tweet objectForKey:@"user"];
                                 [userNameArray addObject:[user objectForKey:@"screen_name"]];
+                                // つぶやきとユーザ名をダンプ
+                                NSLog(@"%@",tweet);
+                                NSLog(@"%@",[user objectForKey:@"screen_name"]);
+                                NSLog(@"%lu",(unsigned long)[tweetTextArray count]);
                             }
+                            tweetreloaded = YES;
                             [self.tableView reloadData];
                         }else{
                             NSLog(@"error: %@",jsonError);

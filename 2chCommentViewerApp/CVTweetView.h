@@ -29,9 +29,10 @@
     ACAccount *account;
 //    ACAccountType *accountType;
 //    ACAccountStore *accountStore;
-    
     UITableViewStyle style;
+    BOOL tweetreloaded;
 }
+//@property (strong,nonatomic) NSMutableArray *tweetArray;
 @property (strong,nonatomic) CVTweetView *detailView;
 @property (strong,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) ACAccountStore *accountStore;

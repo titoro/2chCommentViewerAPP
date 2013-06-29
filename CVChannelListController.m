@@ -178,9 +178,16 @@ NSString *touchedTable;
     //セルの情報の中から文字列を取り出す
     NSString* str = cell.textLabel.text;
     
+    //Twitterタイムライン
+    NSString* twitterTimeline = @"ツイッター タイムライン";
+    
     touchedTable = str;
+    
+    //Twitterタイムラインセル選択時タイムライン表示画面へ
+    if ([str isEqualToString:twitterTimeline]) {
+        [self.navigationController pushViewController:cvTweetView animated:YES];
+    }
 
-    [self.navigationController pushViewController:cvTweetView animated:YES];
 }
 
 //編集ボタンの場合
