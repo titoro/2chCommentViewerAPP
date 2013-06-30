@@ -64,6 +64,7 @@ extern NSString *touchedTable;
     
     userNameArray = [[NSMutableArray alloc] initWithCapacity:0];
     tweetTextArray = [[NSMutableArray alloc] initWithCapacity:0];
+    tweetIconArray = [[NSMutableArray alloc]initWithCapacity:0];
     
     // view の frame は親に追加された時に調整されるので、何でも良い。
     UIView *view = [[UIView alloc] initWithFrame:[UIScreen mainScreen].applicationFrame];
@@ -82,7 +83,7 @@ extern NSString *touchedTable;
     //タイトルの設定
     self.title = @"タイムライン";
     
-    [tableView reloadData];
+//    [tableView reloadData];
     
 }
 
@@ -184,7 +185,7 @@ extern NSString *touchedTable;
     // Return the number of rows in the section.
     //NSLog(@"%lu",(unsigned long)[userNameArray count]);
 //    return [userNameArray count];
-    NSLog(@"%lu",(unsigned long)[tweetTextArray count]);
+    //NSLog(@"%lu",(unsigned long)[tweetTextArray count]);
     //return [tweetTextArray count];
     return 20;
 }
@@ -210,8 +211,20 @@ extern NSString *touchedTable;
     //cell.textLabel.text = [tweetTextArray objectAtIndex:indexPath.row];
     cell.textLabel.font =[UIFont systemFontOfSize:11];
     cell.textLabel.numberOfLines = 0;
+    //ユーザ名を設定
     cell.detailTextLabel.text = [userNameArray objectAtIndex:indexPath.row];
+    //つぶやきを設定
     cell.textLabel.text = [tweetTextArray objectAtIndex:indexPath.row];
+    
+    //アイコン画像を設定
+    NSString* iconPath = [tweetIconArray objectAtIndex:indexPath.row];
+    
+    NSURL* url = [NSURL URLWithString:iconPath];
+    
+    NSData* data = [NSData dataWithContentsOfURL:url];
+    
+    UIImage* img = [[UIImage alloc] initWithData:data];
+    cell.imageView.image = img;
     
     return cell;
 
@@ -232,7 +245,10 @@ extern NSString *touchedTable;
 	CGSize detailSize = [cell.detailTextLabel.text sizeWithFont: cell.detailTextLabel.font
                                               constrainedToSize: bounds
                                                   lineBreakMode: NSLineBreakByCharWrapping];
-    return size.height + detailSize.height + 35;
+    //サイズ調整用
+    int sizeAdjustment = 35;
+    
+    return size.height + detailSize.height + sizeAdjustment;
 }
 
 //画面の初期化終了、ユーザ定義を行う
@@ -385,16 +401,16 @@ extern NSString *touchedTable;
                             NSLog(@"%@", output);
                             //NSLog(@"%@",timeline);
                             for (NSDictionary *tweet in timeline) {
-//                                NSString *str = [tweet objectForKey:@"text"];
-//                                NSLog(@"%@",str);
-//                                [tweetArray addObject:str];
                                 [tweetTextArray addObject:[tweet objectForKey:@"text"]];
                                 NSDictionary *user = [tweet objectForKey:@"user"];
                                 [userNameArray addObject:[user objectForKey:@"screen_name"]];
+                                [tweetIconArray addObject:[user objectForKey:@"profile_image_url"]];
+
                                 // つぶやきとユーザ名をダンプ
                                 NSLog(@"%@",tweet);
                                 NSLog(@"%@",[user objectForKey:@"screen_name"]);
-                                NSLog(@"%lu",(unsigned long)[tweetTextArray count]);
+                                NSLog(@"%@",[user objectForKey:@"profile_image_url"]);
+                                NSLog(@"%lu",(unsigned long)[tweetIconArray count]);
                             }
                             tweetreloaded = YES;
                             [self.tableView reloadData];

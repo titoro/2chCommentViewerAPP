@@ -26,6 +26,7 @@
     CVTweetTableViewController *cvTweetTable;
     NSMutableArray *userNameArray;
     NSMutableArray *tweetTextArray;
+    NSMutableArray *tweetIconArray;
     ACAccount *account;
 //    ACAccountType *accountType;
 //    ACAccountStore *accountStore;
