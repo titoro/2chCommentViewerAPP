@@ -28,10 +28,14 @@
     NSMutableArray *tweetTextArray;
     NSMutableArray *tweetIconArray;
     ACAccount *account;
+    UIImage *tweetIcon;
 //    ACAccountType *accountType;
 //    ACAccountStore *accountStore;
     UITableViewStyle style;
     BOOL tweetreloaded;
+    BOOL firstloaded;
+    int reloadIntarval;
+    int adjestAtIndex;
 }
 //@property (strong,nonatomic) NSMutableArray *tweetArray;
 @property (strong,nonatomic) CVTweetView *detailView;
@@ -67,6 +71,8 @@
 //- (NSArray *)fetchAccounts;
 
 -(void)tweetOAuth:(NSString *)message;
+
+- (UIImage *) makeThumbnailOfSize:(CGSize)size;
 
 //- (void)loadTimeline;
 @end

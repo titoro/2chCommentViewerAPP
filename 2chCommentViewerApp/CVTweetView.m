@@ -60,6 +60,7 @@ extern NSString *touchedTable;
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view
+    firstloaded = NO;
     tweetreloaded = NO;
     
     userNameArray = [[NSMutableArray alloc] initWithCapacity:0];
@@ -82,6 +83,11 @@ extern NSString *touchedTable;
     
     //タイトルの設定
     self.title = @"タイムライン";
+    
+    //Interval after timeline reload
+    reloadIntarval = 30;
+//    [NSTimer scheduledTimerWithTimeInterval:(reloadIntarval) target:self selector:@selector(reloadTweet)
+//                                   userInfo:nil repeats:YES];
     
 //    [tableView reloadData];
     
@@ -211,6 +217,19 @@ extern NSString *touchedTable;
     //cell.textLabel.text = [tweetTextArray objectAtIndex:indexPath.row];
     cell.textLabel.font =[UIFont systemFontOfSize:11];
     cell.textLabel.numberOfLines = 0;
+    cell.imageView.contentMode = UIViewContentModeLeft;
+//    adjestAtIndex += 20;
+  
+//   int userNameAtIndex = indexPath.row;
+//   int tweetTextAtIndex = indexPath.row;
+//   int tweetIconAtIndex = indexPath.row;
+//   if (tweetreloaded == YES && [userNameArray count] > 20 && [tweetTextArray count] > 20 && [tweetIconArray count] > 20) {
+//        userNameAtIndex =indexPath.row + adjestAtIndex;
+//        tweetTextAtIndex =indexPath.row + adjestAtIndex;
+//        tweetIconAtIndex =indexPath.row + adjestAtIndex;
+//       [self reloadTweet];
+//    }
+    
     //ユーザ名を設定
     cell.detailTextLabel.text = [userNameArray objectAtIndex:indexPath.row];
     //つぶやきを設定
@@ -218,13 +237,13 @@ extern NSString *touchedTable;
     
     //アイコン画像を設定
     NSString* iconPath = [tweetIconArray objectAtIndex:indexPath.row];
-    
     NSURL* url = [NSURL URLWithString:iconPath];
-    
     NSData* data = [NSData dataWithContentsOfURL:url];
-    
     UIImage* img = [[UIImage alloc] initWithData:data];
+//    UIImage *img = [orgImg makeThumbnailOfSize:CGSize(50,50)];
     cell.imageView.image = img;
+    
+//    tweetreloaded = NO;
     
     return cell;
 
@@ -405,13 +424,13 @@ extern NSString *touchedTable;
                                 NSDictionary *user = [tweet objectForKey:@"user"];
                                 [userNameArray addObject:[user objectForKey:@"screen_name"]];
                                 [tweetIconArray addObject:[user objectForKey:@"profile_image_url"]];
-
                                 // つぶやきとユーザ名をダンプ
                                 NSLog(@"%@",tweet);
                                 NSLog(@"%@",[user objectForKey:@"screen_name"]);
                                 NSLog(@"%@",[user objectForKey:@"profile_image_url"]);
                                 NSLog(@"%lu",(unsigned long)[tweetIconArray count]);
                             }
+//                            firstloaded = YES;
                             tweetreloaded = YES;
                             [self.tableView reloadData];
                         }else{
@@ -512,6 +531,23 @@ extern NSString *touchedTable;
 //                            }];
 //}
 
+- (UIImage *) makeThumbnailOfSize:(CGSize)size;
+{
+    UIGraphicsBeginImageContext(size);
+    // draw scaled image into thumbnail context
+    [tweetIcon drawInRect:CGRectMake(0, 0, size.width, size.height)];
+    UIImage *newThumbnail = UIGraphicsGetImageFromCurrentImageContext();
+    // pop the context
+    UIGraphicsEndImageContext();
+    if(newThumbnail == nil)
+        NSLog(@"could not scale image");
+    return newThumbnail;
+}
+
+-(void)reloadTweet{
+    tweetreloaded =NO;
+    [self loadTimelineTweet];
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
