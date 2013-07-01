@@ -18,7 +18,7 @@
 #import "OADataFetcher.h"
 #import "OAConsumer.h"
 
-//こっちはクラス変数？
+//こっちはクラス変数
 @class CVTweetTableViewController;
 
 @interface CVTweetView : UIViewController<UITableViewDelegate,UITableViewDataSource>{
@@ -29,24 +29,20 @@
     NSMutableArray *tweetIconArray;
     ACAccount *account;
     UIImage *tweetIcon;
-//    ACAccountType *accountType;
-//    ACAccountStore *accountStore;
     UITableViewStyle style;
     BOOL tweetreloaded;
     BOOL firstloaded;
     int reloadIntarval;
     int adjestAtIndex;
 }
-//@property (strong,nonatomic) NSMutableArray *tweetArray;
 @property (strong,nonatomic) CVTweetView *detailView;
 @property (strong,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) ACAccountStore *accountStore;
 @property (strong,nonatomic) NSMutableArray *grantedAccounts;
-// 必要なら追加。
-//@property (nonatomic, retain) UITableView *tableView;
 //ACCount identifer Record
 @property (atomic,retain) NSString *accountId;
 
+/**  以下のメソッド順次検討、追加していく **/
 //Tweet が可能かどうか？
 //+ (BOOL)canSendTweet;
 
@@ -68,11 +64,7 @@
 ////Tweet 完了後のハンドラー
 //@property (nonatomic, copy) TWTweetComposeViewControllerCompletionHandler completionHandler;
 
-//- (NSArray *)fetchAccounts;
-
 -(void)tweetOAuth:(NSString *)message;
 
 - (UIImage *) makeThumbnailOfSize:(CGSize)size;
-
-//- (void)loadTimeline;
 @end

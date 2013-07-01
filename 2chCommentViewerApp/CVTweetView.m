@@ -40,20 +40,8 @@ extern NSString *touchedTable;
 }
 
 -(void)loadView{
-    //この下にビューの初期化処理
-    //今はテスト
-    //ビューのインスタンスを取得する
-    //UIView* view = [[UIView alloc]initWithFrame:CGRectZero];
-    
-//    userNameArray = [[NSMutableArray alloc] initWithCapacity:0];
-//    tweetTextArray = [[NSMutableArray alloc] initWithCapacity:0];
-//
-//    _accountStore = [[ACAccountStore alloc]init];
-//	accountType = [_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    
     //twitterタイムラインを取得
     [self loadTimelineTweet];
-    //NSLog(@"%@",userNameArray);
 }
 
 - (void)viewDidLoad
@@ -85,12 +73,11 @@ extern NSString *touchedTable;
     self.title = @"タイムライン";
     
     //Interval after timeline reload
-    reloadIntarval = 30;
-//    [NSTimer scheduledTimerWithTimeInterval:(reloadIntarval) target:self selector:@selector(reloadTweet)
+    //リロード自動で行うための処理
+    //リロード機能未実装の為、現在コメントアウト
+//    reloadIntarval = 30;
+//   [NSTimer scheduledTimerWithTimeInterval:(reloadIntarval) target:self selector:@selector(reloadTweet)
 //                                   userInfo:nil repeats:YES];
-    
-//    [tableView reloadData];
-    
 }
 
 //soial.frameworkを使ってツイート
@@ -189,10 +176,7 @@ extern NSString *touchedTable;
 {
     //#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    //NSLog(@"%lu",(unsigned long)[userNameArray count]);
-//    return [userNameArray count];
-    //NSLog(@"%lu",(unsigned long)[tweetTextArray count]);
-    //return [tweetTextArray count];
+    //タイムライン２０件取得し表示する
     return 20;
 }
 
@@ -217,18 +201,17 @@ extern NSString *touchedTable;
     //cell.textLabel.text = [tweetTextArray objectAtIndex:indexPath.row];
     cell.textLabel.font =[UIFont systemFontOfSize:11];
     cell.textLabel.numberOfLines = 0;
-    cell.imageView.contentMode = UIViewContentModeLeft;
-//    adjestAtIndex += 20;
+    adjestAtIndex += 20;
   
-//   int userNameAtIndex = indexPath.row;
-//   int tweetTextAtIndex = indexPath.row;
-//   int tweetIconAtIndex = indexPath.row;
-//   if (tweetreloaded == YES && [userNameArray count] > 20 && [tweetTextArray count] > 20 && [tweetIconArray count] > 20) {
-//        userNameAtIndex =indexPath.row + adjestAtIndex;
-//        tweetTextAtIndex =indexPath.row + adjestAtIndex;
-//        tweetIconAtIndex =indexPath.row + adjestAtIndex;
-//       [self reloadTweet];
-//    }
+    int userNameAtIndex = indexPath.row;
+    int tweetTextAtIndex = indexPath.row;
+    int tweetIconAtIndex = indexPath.row;
+    if (tweetreloaded == YES && [userNameArray count] >= 20 +adjestAtIndex
+        && [tweetTextArray count] >= 20 +adjestAtIndex && [tweetIconArray count] >= 20 +adjestAtIndex) {
+        userNameAtIndex =indexPath.row + adjestAtIndex;
+        tweetTextAtIndex =indexPath.row + adjestAtIndex;
+        tweetIconAtIndex =indexPath.row + adjestAtIndex;
+    }
     
     //ユーザ名を設定
     cell.detailTextLabel.text = [userNameArray objectAtIndex:indexPath.row];
@@ -239,11 +222,10 @@ extern NSString *touchedTable;
     NSString* iconPath = [tweetIconArray objectAtIndex:indexPath.row];
     NSURL* url = [NSURL URLWithString:iconPath];
     NSData* data = [NSData dataWithContentsOfURL:url];
+    cell.imageView.contentMode = UIViewContentModeLeft;
     UIImage* img = [[UIImage alloc] initWithData:data];
 //    UIImage *img = [orgImg makeThumbnailOfSize:CGSize(50,50)];
     cell.imageView.image = img;
-    
-//    tweetreloaded = NO;
     
     return cell;
 
@@ -270,44 +252,18 @@ extern NSString *touchedTable;
     return size.height + detailSize.height + sizeAdjustment;
 }
 
-//画面の初期化終了、ユーザ定義を行う
-//twitterのタイムラインの取得
-//現在通っていない。なぜ？
+//画面の初期化終了後の処理
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification{
-//    ACAccountStore *accountStoreTw = [[ACAccountStore alloc]init];
-//    ACAccountType *accountTypeTw = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-//    [accountStoreTw requestAccessToAccountsWithType:accountTypeTw options:nil completion:^(BOOL granted, NSError *error) {
-//        if(granted){
-//            NSArray *accounts = [self->accountStore accountsWithAccountType:accountType];
-//            
-//            if (accounts != nil && [accounts count] != 0) {
-//                ACAccount *twAccount = [accounts objectAtIndex:0];
-//                NSURL *url = [NSURL URLWithString:@"http://twitter.com/1/statuses/public_timeline.format"];
-//                    NSDictionary *params = [NSDictionary dictionaryWithObject:@"1" forKey:@"include_entities"];
-//                SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:url parameters:params];
-//                request.account = twAccount;
-//                [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-//                    if (urlResponse){
-//                        NSError *jsonError;
-//                        NSArray *timeline = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:&jsonError];
-//                        if(timeline){
-////                            NSString *output = [NSString stringWithFormat:@"HTTP response status: %ld",[urlResponse statusCode]];
-////                            NSLog(@"%@", output);
-//                            NSLog(@"%@",timeline);
-//                        }else{
-//                            NSLog(@"error: %@",jsonError);
-//                        }
-//                    }
-//                }];
-//            }
-//        }
-//    }];
+    //
+    
 }
 
 //Twitterのタイムラインを取得する
 -(void)loadTimelineTweet{
     
-    //未認可のリクエストトークンをtwitterから取得
+//未認可のリクエストトークンをtwitterから取得
+//現在は使用していないためコメントアウト
+/******************************************************************/
 //        OAConsumer *consumer =
 //        [[OAConsumer alloc] initWithKey:@"aovoz75XqdBMGxj3F1dfg"
 //                                secret:@"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY"];
@@ -346,6 +302,11 @@ extern NSString *touchedTable;
 //    			}
 //    		}
 //    }];
+/************************************************************************/
+    //リロードフラグをNOにする
+    if (tweetreloaded == YES) {
+        tweetreloaded = NO;
+    }
     
     //ACAccountStoreオブジェクトを生成
     _accountStore = [[ACAccountStore alloc] init];
@@ -399,7 +360,7 @@ extern NSString *touchedTable;
 //        });
 //    }];
     
-/******************************************/
+/*************************************************************************************/
     
     [_accountStore requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
         if(granted){
@@ -443,94 +404,6 @@ extern NSString *touchedTable;
     }];
 }
 
-//twitterのタイムラインをテーブル形式で表示させる。メソッド名はあとで書き換える
-//- (void)loadTimeline{
-//	
-//    //未認可のリクエストトークンをtwitterから取得
-//    OAConsumer *consumer =
-//    [[OAConsumer alloc] initWithKey:@"aovoz75XqdBMGxj3F1dfg"
-//                            secret:@"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY"];
-//    OAToken *accessToken =
-//        [[OAToken alloc] initWithKey:@"215992182-56ELH2oBtBmYqltZHIwEk31ieF70e2YDii5RpHIX"
-//                        secret:@"oGxMWDDJ0mtE0uzpukeb15pHP6W8iJjijmSUKUAYecI"];
-//
-//    NSURL *url = [NSURL URLWithString:@"http://api.twitter.com/1.1/statuses/firehose"];
-//
-//    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
-//                                                                 consumer:consumer
-//                                                                    token:accessToken
-//                                                                    realm:nil
-//                                                        signatureProvider:nil];
-//    
-//    [request setHTTPMethod:@"POST"];
-//    
-//    OADataFetcher *fetcher = [[OADataFetcher alloc] init];
-//    
-//    [fetcher fetchDataWithRequest:request
-//                         delegate:self
-//                didFinishSelector:@selector(requestTokenTicket:didFinishWithData:)
-//                  didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
-//
-//    
-//    accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-//	
-//	[accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
-//		if(granted)
-//		{
-//			NSArray *accountstores = [accountStore accountsWithAccountType:accountType];
-//			if([accountstores count] > 0)
-//			{
-//				account = [accountstores objectAtIndex:0];
-//				self.accountId = account.identifier;
-//			}
-//		}
-//	}];
-//    
-//    
-//    [accountStore requestAccessToAccountsWithType:accountType
-//                            withCompletionHandler:^(BOOL granted, NSError *error) {
-//                                if (granted) {
-//                                    
-//                                    if (account == nil) {
-//                                        NSArray *accountArray = [accountStore accountsWithAccountType:accountType];
-////                                        NSArray *accountArray = [self fetchAccounts];
-//                                        account = [accountArray objectAtIndex:0];
-//                                        NSLog(@"%@",account);
-//                                    }
-//                                    
-//                                    if (account != nil) {
-//                                        NSURL *url = [NSURL URLWithString:@"h‌ttp://api.twitter.com/1.1/statuses/home_timeline.json"];
-//                                        NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-//                                        [params setObject:@"20" forKey:@"count"];
-//                                        [params setObject:@"1" forKey:@"include_entities"];
-//                                        [params setObject:@"1" forKey:@"include_rts"];
-//                                        
-//                                        //iOS6非推奨の為Social Frameworkを使ったものに変更
-////                                        TWRequest *request = [[TWRequest alloc] initWithURL:url
-////                                                                                 parameters:params
-////                                                                              requestMethod:TWRequestMethodGET];
-//                                        
-//                                        SLRequest *request = [SLRequest requestForServiceType:
-//                                                                                SLServiceTypeFacebook
-//                                            requestMethod:SLRequestMethodPOST
-//                                            URL:url
-//                                            parameters:params];
-//                                        [request setAccount:account];
-//                                        [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-//                                            
-//                                            if (responseData) {
-//                                                NSError *jsonError;
-//                                                NSArray *timeline = [NSJSONSerialization JSONObjectWithData:responseData
-//                                                                                                    options:NSJSONReadingMutableLeaves error:&jsonError];
-//                                                NSLog(@"%@", timeline);
-//                                            }
-//                                            
-//                                        }];
-//                                    }
-//                                }
-//                            }];
-//}
-
 - (UIImage *) makeThumbnailOfSize:(CGSize)size;
 {
     UIGraphicsBeginImageContext(size);
@@ -544,8 +417,8 @@ extern NSString *touchedTable;
     return newThumbnail;
 }
 
+//タイムラインのリロード処理
 -(void)reloadTweet{
-    tweetreloaded =NO;
     [self loadTimelineTweet];
 }
 

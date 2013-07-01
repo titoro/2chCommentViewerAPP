@@ -12,6 +12,7 @@
 		520A6010174F2081002D32E3 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 520A600F174F2081002D32E3 /* Accounts.framework */; };
 		520A6012174F2090002D32E3 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 520A6011174F2090002D32E3 /* Twitter.framework */; };
 		5225D6DD17505E0F00706686 /* CVTweetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5225D6DC17505E0F00706686 /* CVTweetTableViewController.m */; };
+		523F638817801A0900AEEEFE /* CVTweetTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523F638717801A0900AEEEFE /* CVTweetTagView.m */; };
 		525ACE5117659CC5005A5C3F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 525ACE5017659CC5005A5C3F /* Default-568h@2x.png */; };
 		527B77351707CE68009D8187 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527B77341707CE68009D8187 /* UIKit.framework */; };
 		527B77371707CE68009D8187 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527B77361707CE68009D8187 /* Foundation.framework */; };
@@ -65,6 +66,8 @@
 		520A6011174F2090002D32E3 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		5225D6DB17505E0F00706686 /* CVTweetTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVTweetTableViewController.h; sourceTree = "<group>"; };
 		5225D6DC17505E0F00706686 /* CVTweetTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVTweetTableViewController.m; sourceTree = "<group>"; };
+		523F638617801A0900AEEEFE /* CVTweetTagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVTweetTagView.h; sourceTree = "<group>"; };
+		523F638717801A0900AEEEFE /* CVTweetTagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVTweetTagView.m; sourceTree = "<group>"; };
 		525ACE5017659CC5005A5C3F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		527B77301707CE68009D8187 /* 2chCommentViewerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = 2chCommentViewerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		527B77341707CE68009D8187 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -192,6 +195,8 @@
 				52FC1496175A7EEC00A89F41 /* oauthconsumer-master */,
 				5225D6DB17505E0F00706686 /* CVTweetTableViewController.h */,
 				5225D6DC17505E0F00706686 /* CVTweetTableViewController.m */,
+				523F638617801A0900AEEEFE /* CVTweetTagView.h */,
+				523F638717801A0900AEEEFE /* CVTweetTagView.m */,
 				520A600C174DCF75002D32E3 /* CVTweetView.h */,
 				520A600D174DCF75002D32E3 /* CVTweetView.m */,
 				52FD0FD81708EFC100C9CC34 /* CVChannelCell.h */,
@@ -426,6 +431,7 @@
 				52FC14CC175A7EEC00A89F41 /* OAMutableURLRequest.m in Sources */,
 				52FC14CF175A7EEC00A89F41 /* OARequestParameter.m in Sources */,
 				52FC14D2175A7EEC00A89F41 /* OAToken.m in Sources */,
+				523F638817801A0900AEEEFE /* CVTweetTagView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
