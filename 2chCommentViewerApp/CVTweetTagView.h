@@ -41,6 +41,7 @@
 @property (strong,nonatomic) NSMutableArray *grantedAccounts;
 @property (atomic,retain) NSString *accountId;
 
+-(void)tweetOAuth:(NSString *)message;
 
+- (UIImage *) makeThumbnailOfSize:(CGSize)size;
 @end
-
