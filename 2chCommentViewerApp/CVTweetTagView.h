@@ -22,6 +22,25 @@
 @class CVTweetTagView;
 
 @interface CVTweetTagView : UIViewController<UITableViewDelegate,UITableViewDataSource>{
-    
+    CVTweetTableViewController *cvTweetTable;
+    NSMutableArray *userNameArray;
+    NSMutableArray *tweetTextArray;
+    NSMutableArray *tweetIconArray;
+    ACAccount *account;
+    UIImage *tweetIcon;
+    UITableViewStyle style;
+    BOOL tweetreloaded;
+    BOOL firstloaded;
+    int reloadIntarval;
+    int adjestAtIndex;
 }
+
+@property (strong,nonatomic) CVTweetView *detailView;
+@property (strong,nonatomic) UITableView *tableView;
+@property (strong,nonatomic) ACAccountStore *accountStore;
+@property (strong,nonatomic) NSMutableArray *grantedAccounts;
+@property (atomic,retain) NSString *accountId;
+
+
 @end
+
