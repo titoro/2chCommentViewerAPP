@@ -10,6 +10,7 @@
 #import "CVChannelTable.h"
 #import "CVChannel.h"   //test用
 #import "CvTweetView.h"
+#import "CVTweetTagView.h"
 
 @interface CVChannelListController : UIViewController<UITableViewDelegate,UITableViewDataSource>{
     UITableViewStyle style;    // 実際は loadView にハードコードで構わないことが多く、不要だろう。どゆこと？

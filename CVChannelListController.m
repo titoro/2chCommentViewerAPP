@@ -7,7 +7,9 @@
 //
 
 #import "CVChannelListController.h"
-//グローバル関数 test
+//グローバル関数
+//test code
+//値受け渡しに書き換える
 NSString *touchedTable;
 @interface CVChannelListController ()
 
@@ -160,8 +162,6 @@ NSString *touchedTable;
 // そのまま。
 - (void)tableView:(UITableView *)theTableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    // 行が選択された場合の処理。
-    CVTweetView *cvTweetView = [[CVTweetView alloc]init];
     
     //test
     //NSString* touched = @"テレビ東京";
@@ -181,12 +181,19 @@ NSString *touchedTable;
     //Twitterタイムライン
     NSString* twitterTimeline = @"ツイッター タイムライン";
     
-//    touchedTable = str;
+    //タッチされたセルの文字列を設定
+    touchedTable = str;
     
     //Twitterタイムラインセル選択時タイムライン表示画面へ
     if ([str isEqualToString:twitterTimeline]) {
+        // 行が選択された場合の処理。
+        CVTweetView *cvTweetView = [[CVTweetView alloc]init];
         [self.navigationController pushViewController:cvTweetView animated:YES];
     }
+    
+    //Tweeterタイムラインセル選択時以外はタグ検索画面へ
+    CVTweetTagView *cvTweetTagView = [[CVTweetTagView alloc]init];
+    [self.navigationController pushViewController:cvTweetTagView animated:YES];
 
 }
 

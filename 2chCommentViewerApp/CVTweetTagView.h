@@ -35,7 +35,7 @@
     int adjestAtIndex;
 }
 @property (strong,nonatomic) NSString *hashTag;
-@property (strong,nonatomic) CVTweetView *detailView;
+@property (strong,nonatomic) CVTweetTagView *detailView;
 @property (strong,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) ACAccountStore *accountStore;
 @property (strong,nonatomic) NSMutableArray *grantedAccounts;
