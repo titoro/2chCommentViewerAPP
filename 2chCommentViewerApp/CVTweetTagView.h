@@ -18,7 +18,7 @@
 #import "OADataFetcher.h"
 #import "OAConsumer.h"
 
-//こっちはクラス変数
+//クラス変数
 @class CVTweetTagView;
 
 @interface CVTweetTagView : UIViewController<UITableViewDelegate,UITableViewDataSource>{
@@ -29,19 +29,17 @@
     ACAccount *account;
     UIImage *tweetIcon;
     UITableViewStyle style;
-    BOOL tweetreloaded;
-    BOOL firstloaded;
+    BOOL tweetreloaded;         //ツイートロードフラグ
+    BOOL firstloaded;           //ロードの初期化フラグ
     int reloadIntarval;
     int adjestAtIndex;
 }
-
+@property (strong,nonatomic) NSString *hashTag;
 @property (strong,nonatomic) CVTweetView *detailView;
 @property (strong,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) ACAccountStore *accountStore;
 @property (strong,nonatomic) NSMutableArray *grantedAccounts;
 @property (atomic,retain) NSString *accountId;
-
--(void)tweetOAuth:(NSString *)message;
 
 - (UIImage *) makeThumbnailOfSize:(CGSize)size;
 @end
