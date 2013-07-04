@@ -17,6 +17,7 @@
 #import "OAServiceTicket.h"
 #import "OADataFetcher.h"
 #import "OAConsumer.h"
+#import "OAToken.h"
 
 //クラス変数
 @class CVTweetTagView;
@@ -33,6 +34,8 @@
     BOOL firstloaded;           //ロードの初期化フラグ
     int reloadIntarval;
     int adjestAtIndex;
+    OAConsumer *consumer;
+    OAToken *requestToken;
 }
 @property (strong,nonatomic) NSString *hashTag;
 @property (strong,nonatomic) CVTweetTagView *detailView;

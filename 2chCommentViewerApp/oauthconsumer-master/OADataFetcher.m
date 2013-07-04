@@ -66,18 +66,18 @@
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
-//	OAServiceTicket *ticket = [[OAServiceTicket alloc] initWithRequest:request
-//															  response:response
-//																  data:responseData
-//															didSucceed:[(NSHTTPURLResponse *)response statusCode] < 400];
-//
-//	[delegate performSelector:didFinishSelector withObject:ticket withObject:responseData];
+	OAServiceTicket *ticket = [[OAServiceTicket alloc] initWithRequest:request
+															  response:response
+																  data:responseData
+															didSucceed:[(NSHTTPURLResponse *)response statusCode] < 400];
+
+	[delegate performSelector:didFinishSelector withObject:ticket withObject:responseData];
 //	[ticket release];
 }
 
 - (void)fetchDataWithRequest:(OAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector {
 //	[request release];
-//	request = [aRequest retain];
+	request = aRequest;
     delegate = aDelegate;
     didFinishSelector = finishSelector;
     didFailSelector = failSelector;
@@ -85,6 +85,7 @@
     [request prepare];
 
 	connection = [[NSURLConnection alloc] initWithRequest:aRequest delegate:self];
+    NSLog(@"%@",connection);
 }
 
 @end

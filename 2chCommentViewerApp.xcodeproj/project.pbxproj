@@ -13,6 +13,7 @@
 		520A6012174F2090002D32E3 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 520A6011174F2090002D32E3 /* Twitter.framework */; };
 		5225D6DD17505E0F00706686 /* CVTweetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5225D6DC17505E0F00706686 /* CVTweetTableViewController.m */; };
 		523F638817801A0900AEEEFE /* CVTweetTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523F638717801A0900AEEEFE /* CVTweetTagView.m */; };
+		523F63891785B2BF00AEEEFE /* OAServiceTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = 529C1467176531C000E70C5F /* OAServiceTicket.m */; };
 		525ACE5117659CC5005A5C3F /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 525ACE5017659CC5005A5C3F /* Default-568h@2x.png */; };
 		527B77351707CE68009D8187 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527B77341707CE68009D8187 /* UIKit.framework */; };
 		527B77371707CE68009D8187 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 527B77361707CE68009D8187 /* Foundation.framework */; };
@@ -409,6 +410,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				523F63891785B2BF00AEEEFE /* OAServiceTicket.m in Sources */,
 				527B77411707CE68009D8187 /* main.m in Sources */,
 				527B77451707CE68009D8187 /* AppDelegate.m in Sources */,
 				527B77721707D351009D8187 /* CVChannelListController.m in Sources */,

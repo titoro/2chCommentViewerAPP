@@ -13,12 +13,22 @@
 @end
 
 @implementation CVTweetTagView
+
 @synthesize accountId = _accountId;
 @synthesize detailView = _detailView;
 @synthesize accountStore = _accountStore;
 @synthesize grantedAccounts = _grantedAccounts;
 @synthesize tableView;
 @synthesize hashTag;
+
+- (id)initWithStyle:(UITableViewStyle)theStyle
+{
+    self = [super init];    // xib ファイルは使わないと仮定。
+    if (self != nil) {
+        style = theStyle;
+    }
+    return self;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,8 +44,35 @@
     //test code
     hashTag = @"あまちゃん";
     
+    // サービスからアプリ用に割り当てられたKeyとSecret を設定
+    NSString* kTwitterConsumerKey = @"aovoz75XqdBMGxj3F1dfg";
+    NSString* kTwitterConsumerSecret = @"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY";
+
+    consumer = [[OAConsumer alloc] initWithKey:kTwitterConsumerKey
+                                         secret:kTwitterConsumerSecret];
+    
+    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/oauth/request_token"];
+    
+    OAMutableURLRequest *request =[[OAMutableURLRequest alloc]
+      initWithURL:url
+      consumer:consumer
+      token:nil
+      realm:nil
+      signatureProvider:nil];
+    
+    [request setHTTPMethod:@"POST"];
+    
+    OADataFetcher *fetcher = [[OADataFetcher alloc] init];
+    
+    [fetcher fetchDataWithRequest:request
+                         delegate:self
+                didFinishSelector:@selector(requestTokenTicket:didFinishWithData:)
+                  didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
+
     //twitterハッシュタグ検索結果を取得
-    [self loadTagTweet:hashTag];
+    //[self loadTagTweet:hashTag];
+    //[self tweetOAuth:hashTag];
+    
 }
 
 - (void)viewDidLoad
@@ -68,20 +105,43 @@
     self.title = @"検索画面";
 }
 
+- (void)requestTokenTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data {
+    if (ticket.didSucceed) {
+        NSString *responseBody =[[NSString alloc] initWithData:data
+                               encoding:NSUTF8StringEncoding];
+        
+        requestToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
+        
+        
+        // WebView
+        NSString *urlString =
+        [NSString stringWithFormat:
+         @"https://api.twitter.com/oauth/authorize?oauth_token=%@",requestToken.key];
+        
+        NSURLRequest *urlRequest =
+        [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
+        
+        UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+        
+        [webView loadRequest:urlRequest];
+        [self.view addSubview:webView];
+    }
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void)requestTokenTicket:(OAServiceTicket *)ticket
-         didFinishWithData:(NSData *)data {
-    NSString *response = [[NSString alloc] initWithData:data
-                                               encoding:NSUTF8StringEncoding];
-    NSLog(@"Response: %@", response);
-}
-- (void)requestTokenTicket:(OAServiceTicket *)ticket
-          didFailWithError:(NSError*)error {
+//- (void)requestTokenTicket:(OAServiceTicket *)ticket
+//         didFinishWithData:(NSData *)data {
+//    NSString *response = [[NSString alloc] initWithData:data
+//                                               encoding:NSUTF8StringEncoding];
+//    NSLog(@"Response: %@", response);
+//}
+
+- (void)requestTokenTicket:(OAServiceTicket *)ticket didFailWithError:(NSError*)error {
     NSLog(@"Error: %@", error);
 }
 
@@ -98,6 +158,48 @@
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+}
+
+//twitter OAuth Request
+-(void)tweetOAuth:(NSString *)message{
+    //Current code is test
+    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/search/tweets.json?q=あまちゃん"];
+    
+    // サービスからアプリ用に割り当てられたKeyとSecret
+    NSString* consumerKey = @"aovoz75XqdBMGxj3F1dfg";
+    NSString* consumerSecret = @"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY";
+    
+    // API問い合わせにつかうクライアント単位のKeyとSecret
+    NSString* tokenKey = nil;
+    NSString* tokenSecret = nil;
+    
+    OAConsumer *consumerL = [[OAConsumer alloc]
+                            initWithKey:consumerKey secret:consumerSecret];
+    OAToken* token = tokenKey ? [[OAToken alloc]
+                                 initWithKey:tokenKey secret:tokenSecret]  : nil;
+    
+    // リクエストを生成する
+    OAMutableURLRequest *request = [[OAMutableURLRequest alloc]
+                                    initWithURL:url consumer:consumerL
+                                    token:token realm:nil signatureProvider:nil];
+    
+    // リクエストを実行する
+    OADataFetcher* fetcher = [[OADataFetcher alloc] init];
+    [fetcher fetchDataWithRequest:request
+                         delegate:self
+                didFinishSelector:@selector(requestTokenTicket:didFinishWithData:)
+                  didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
+    
+    [request setHTTPMethod:@"GET"];
+    NSString *bodyString = [NSString stringWithFormat:@"status=%@",
+                            (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(
+                                                                                         kCFAllocatorDefault,
+                                                                                         (__bridge CFStringRef)message,
+                                                                                         NULL,
+                                                                                         NULL,
+                                                                                         kCFStringEncodingUTF8)];
+    [request setHTTPBody:[bodyString dataUsingEncoding:NSUTF8StringEncoding]];
+    NSLog(@"%@",request);
 }
 
 //soial.frameworkを使ってツイート
@@ -198,6 +300,7 @@
     //TwitterのACAccountTypeオブジェクトを取得し、それを元にアカウントを取得
     ACAccountType *accountType = [_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     NSArray *accounts = [_accountStore accountsWithAccountType:accountType];
+    NSLog(@"%@",accounts);
     if (accounts.count == 0) {
         NSLog(@"Please add twitter account on Settings");
         return;
@@ -209,8 +312,9 @@
             
             if (accounts != nil && [accounts count] != 0) {
                 ACAccount *twAccount = [accounts objectAtIndex:0];
-                NSString *string1 = @"http://search.twitter.com/1.1/search.twitter.com/search.json?q=%23";
+                NSString *string1 = @"https://api.twitter.com/1.1/search/tweets.json?q=";
                 NSString *urlStr = [NSString stringWithFormat:@"%@%@",string1,hashTag];
+                NSLog(@"%@",urlStr);
                 NSURL *url = [NSURL URLWithString:urlStr];
                 NSDictionary *params = [NSDictionary dictionaryWithObject:@"1" forKey:@"include_entities"];
                 SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:url parameters:params];
@@ -240,6 +344,7 @@
                         }else{
                             NSLog(@"error: %@",jsonError);
                         }
+                        NSLog(@"%@",urlResponse);
                     }
                 }];
             }
