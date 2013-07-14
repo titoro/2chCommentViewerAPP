@@ -37,28 +37,28 @@
 }
 
 - (void)dealloc {
-//	[connection release];
-//	[response release];
-//	[responseData release];
-//	[request release];
-//	[super dealloc];
+	[connection release];
+	[response release];
+	[responseData release];
+	[request release];
+	[super dealloc];
 }
 
 /* Protocol for async URL loading */
 - (void)connection:(NSURLConnection *)aConnection didReceiveResponse:(NSURLResponse *)aResponse {
-//	[response release];
-//	response = [aResponse retain];
+	[response release];
+	response = [aResponse retain];
 	[responseData setLength:0];
 }
 	
 - (void)connection:(NSURLConnection *)aConnection didFailWithError:(NSError *)error {
-//	OAServiceTicket *ticket = [[OAServiceTicket alloc] initWithRequest:request
-//															  response:response
-//																  data:responseData
-//															didSucceed:NO];
+	OAServiceTicket *ticket = [[OAServiceTicket alloc] initWithRequest:request
+															  response:response
+																  data:responseData
+															didSucceed:NO];
 
-//	[delegate performSelector:didFailSelector withObject:ticket withObject:error];
-//	[ticket release];
+	[delegate performSelector:didFailSelector withObject:ticket withObject:error];
+	[ticket release];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
@@ -71,15 +71,13 @@
 																  data:responseData
 															didSucceed:[(NSHTTPURLResponse *)response statusCode] < 400];
 
-    //この警告文は無視しても問題ない
-    //http://captainshadow.hatenablog.com/entry/20121114/1352834276 参照
 	[delegate performSelector:didFinishSelector withObject:ticket withObject:responseData];
-//	[ticket release];
+	[ticket release];
 }
 
 - (void)fetchDataWithRequest:(OAMutableURLRequest *)aRequest delegate:(id)aDelegate didFinishSelector:(SEL)finishSelector didFailSelector:(SEL)failSelector {
-//	[request release];
-	request = aRequest;
+	[request release];
+	request = [aRequest retain];
     delegate = aDelegate;
     didFinishSelector = finishSelector;
     didFailSelector = failSelector;
@@ -87,7 +85,6 @@
     [request prepare];
 
 	connection = [[NSURLConnection alloc] initWithRequest:aRequest delegate:self];
-    NSLog(@"%@",connection);
 }
 
 @end

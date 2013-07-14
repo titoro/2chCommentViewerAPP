@@ -32,23 +32,19 @@
 
 - (id)initWithRequest:(OAMutableURLRequest *)aRequest response:(NSURLResponse *)aResponse data:(NSData *)aData didSucceed:(BOOL)success {
     if ((self = [super init])) {
-		request = aRequest;
-        NSLog(@"%@",request);
-		response = aResponse;
-        NSLog(@"%@",response);
-		data = aData;
-        NSLog(@"%@",data);
+		request = [aRequest retain];
+		response = [aResponse retain];
+		data = [aData retain];
 		didSucceed = success;
-        NSLog(@"%d",didSucceed);
 	}
     return self;
 }
 
 - (void)dealloc {
-	//[request release];
-	//[response release];
-	//[data release];
-	//[super dealloc];
+	[request release];
+	[response release];
+	[data release];
+	[super dealloc];
 }
 
 - (NSString *)body
@@ -57,7 +53,7 @@
 		return nil;
 	}
 	
-	return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	return [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
 }
 
 @end

@@ -61,7 +61,7 @@
     
     NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token"];
     
-    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:tReqUrl
+    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
                                                                    consumer:consumer
                                                                       token:nil
                                                                       realm:nil
@@ -75,11 +75,14 @@
     NSLog(@"%@",request);
     
     [request setHTTPMethod:@"POST"];
+    NSLog(@"%@",request);
     
     [fetcher fetchDataWithRequest:request
                          delegate:self
                 didFinishSelector:@selector(requestTokenTicket:didFinishWithData:)
                   didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
+    NSLog(@"%@",fetcher);
+
 //    consumer = [[OAConsumer alloc] initWithKey:kTwitterConsumerKey
 //                                         secret:kTwitterConsumerSecret];
 //    
@@ -175,7 +178,7 @@
         
         _accessToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
         NSLog(@"%@",_accessToken);
-        
+    
         NSString *address = [NSString stringWithFormat:
                              @"https://api.twitter.com/oauth/authorize?oauth_token=%@",
                              _accessToken.key];

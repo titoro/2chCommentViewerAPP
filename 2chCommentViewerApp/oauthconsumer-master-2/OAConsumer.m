@@ -1,5 +1,5 @@
 //
-//  OAHMAC_SHA1SignatureProvider.m
+//  OAConsumer.m
 //  OAuthConsumer
 //
 //  Created by Jon Crosby on 10/19/07.
@@ -23,36 +23,38 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
+#import "OAConsumer.h"
 
-#import "OAHMAC_SHA1SignatureProvider.h"
 
-#include "hmac.h"
-#include "Base64Transcoder.h"
+@implementation OAConsumer
+@synthesize key, secret;
 
-@implementation OAHMAC_SHA1SignatureProvider
+#pragma mark init
 
-- (NSString *)name {
-    return @"HMAC-SHA1";
+- (id)initWithKey:(NSString *)aKey secret:(NSString *)aSecret {
+	if ((self = [super init])) {
+		self.key = aKey;
+		self.secret = aSecret;
+	}
+	return self;
 }
 
-- (NSString *)signClearText:(NSString *)text withSecret:(NSString *)secret {
-    NSData *secretData = [secret dataUsingEncoding:NSUTF8StringEncoding];
-    NSData *clearTextData = [text dataUsingEncoding:NSUTF8StringEncoding];
-    unsigned char result[20];
-    hmac_sha1((unsigned char *)[clearTextData bytes], [clearTextData length], (unsigned char *)[secretData bytes], [secretData length], result);
-//	[secretData release];
-//	[clearTextData release];
-    
-    //Base64 Encoding
-    
-    char base64Result[32];
-    size_t theResultLength = 32;
-    Base64EncodeData(result, 20, base64Result, &theResultLength);
-    NSData *theData = [NSData dataWithBytes:base64Result length:theResultLength];
-    
-    NSString *base64EncodedResult = [[NSString alloc] initWithData:theData encoding:NSUTF8StringEncoding];
-    
-    return base64EncodedResult;
+- (void)dealloc {
+	[key release];
+	[secret release];
+	[super dealloc];
+}
+
+- (BOOL)isEqual:(id)object {
+	if ([object isKindOfClass:[self class]]) {
+		return [self isEqualToConsumer:(OAConsumer*)object];
+	}
+	return NO;
+}
+
+- (BOOL)isEqualToConsumer:(OAConsumer *)aConsumer {
+	return ([self.key isEqualToString:aConsumer.key] &&
+			[self.secret isEqualToString:aConsumer.secret]);
 }
 
 @end

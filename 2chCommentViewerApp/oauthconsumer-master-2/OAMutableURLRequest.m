@@ -47,13 +47,13 @@ signatureProvider:(id<OASignatureProviding>)aProvider {
            cachePolicy:NSURLRequestReloadIgnoringCacheData
 	   timeoutInterval:10.0])) {
     
-		consumer = aConsumer;
+		consumer = [aConsumer retain];
 		
 		// empty token for Unauthorized Request Token transaction
 		if (aToken == nil) {
 			token = [[OAToken alloc] init];
 		} else {
-		//	token = [aToken retain];
+			token = [aToken retain];
 		}
 		
 		if (aRealm == nil) {
@@ -66,7 +66,7 @@ signatureProvider:(id<OASignatureProviding>)aProvider {
 		if (aProvider == nil) {
 			signatureProvider = [[OAHMAC_SHA1SignatureProvider alloc] init];
 		} else {
-		//	signatureProvider = [aProvider retain];
+			signatureProvider = [aProvider retain];
 		}
 		
 		[self _generateTimestamp];
@@ -118,25 +118,24 @@ signatureProvider:(id<OASignatureProviding>)aProvider
 	[chunks	addObject:@"oauth_version=\"1.0\""];
 	
 	NSString *oauthHeader = [NSString stringWithFormat:@"OAuth %@", [chunks componentsJoinedByString:@", "]];
-	//[chunks release];
+	[chunks release];
 
     [self setValue:oauthHeader forHTTPHeaderField:@"Authorization"];
 }
 
 - (void)_generateTimestamp {
-	//[timestamp release];
-    /*下記警告文をそのまま修正したら警告消えたけど不安なのでここにコメント*/
-    timestamp = [[NSString alloc]initWithFormat:@"%ld", time(NULL)];
+	[timestamp release];
+    timestamp = [[NSString alloc]initWithFormat:@"%d", time(NULL)];
 }
 
 - (void)_generateNonce {
     CFUUIDRef theUUID = CFUUIDCreate(NULL);
     CFStringRef string = CFUUIDCreateString(NULL, theUUID);
-//    [NSMakeCollectable(theUUID) autorelease];
-//	if (nonce) {
-//		CFRelease(nonce);
-//	}
-    nonce = (__bridge NSString *)string;
+    [NSMakeCollectable(theUUID) autorelease];
+	if (nonce) {
+		CFRelease(nonce);
+	}
+    nonce = (NSString *)string;
 }
 
 NSInteger normalize(id obj1, id obj2, void *context)
@@ -171,19 +170,19 @@ NSInteger normalize(id obj1, id obj2, void *context)
 	parameter = [[OARequestParameter alloc] initWithName:@"oauth_consumer_key" value:consumer.key];
 	
     [parameterPairs addObject:[parameter URLEncodedNameValuePair]];
-	//[parameter release];
+	[parameter release];
 	parameter = [[OARequestParameter alloc] initWithName:@"oauth_signature_method" value:[signatureProvider name]];
     [parameterPairs addObject:[parameter URLEncodedNameValuePair]];
-	//[parameter release];
+	[parameter release];
 	parameter = [[OARequestParameter alloc] initWithName:@"oauth_timestamp" value:timestamp];
     [parameterPairs addObject:[parameter URLEncodedNameValuePair]];
-	//[parameter release];
+	[parameter release];
 	parameter = [[OARequestParameter alloc] initWithName:@"oauth_nonce" value:nonce];
     [parameterPairs addObject:[parameter URLEncodedNameValuePair]];
-	//[parameter release];
+	[parameter release];
 	parameter = [[OARequestParameter alloc] initWithName:@"oauth_version" value:@"1.0"] ;
     [parameterPairs addObject:[parameter URLEncodedNameValuePair]];
-	//[parameter release];
+	[parameter release];
 	
 	for(NSString *k in tokenParameters) {
 		[parameterPairs addObject:[[OARequestParameter requestParameter:k value:[tokenParameters objectForKey:k]] URLEncodedNameValuePair]];
@@ -199,7 +198,7 @@ NSInteger normalize(id obj1, id obj2, void *context)
     NSArray *sortedPairs = [parameterPairs sortedArrayUsingFunction:normalize context:NULL];
 
     NSString *normalizedRequestParameters = [sortedPairs componentsJoinedByString:@"&"];
-    //[parameterPairs release];
+    [parameterPairs release];
 	//	NSLog(@"Normalized: %@", normalizedRequestParameters);
     // OAuth Spec, Section 9.1.2 "Concatenate Request Elements"
     return [NSString stringWithFormat:@"%@&%@&%@",
@@ -210,14 +209,14 @@ NSInteger normalize(id obj1, id obj2, void *context)
 
 - (void) dealloc
 {
-//    [consumer release];
-//	[token release];
-//	[signatureProvider release];
-//	[timestamp release];
-//	if (nonce) {
-//		CFRelease(nonce);
-//	}
-//	[super dealloc];
+    [consumer release];
+	[token release];
+	[signatureProvider release];
+	[timestamp release];
+	if (nonce) {
+		CFRelease(nonce);
+	}
+	[super dealloc];
 }
 
 @end
