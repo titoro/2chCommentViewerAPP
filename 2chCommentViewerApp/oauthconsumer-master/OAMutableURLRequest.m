@@ -47,7 +47,7 @@ signatureProvider:(id<OASignatureProviding>)aProvider {
            cachePolicy:NSURLRequestReloadIgnoringCacheData
 	   timeoutInterval:10.0])) {
     
-		//consumer = [aConsumer retain];
+		consumer = aConsumer;
 		
 		// empty token for Unauthorized Request Token transaction
 		if (aToken == nil) {

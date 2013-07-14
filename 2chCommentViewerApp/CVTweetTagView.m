@@ -56,9 +56,12 @@
     
     OADataFetcher *fetcher = [[OADataFetcher alloc] init];
     
-    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token&=aovoz75XqdBMGxj3F1dfg"];
+    //test code
+    NSURL *tReqUrl =[NSURL URLWithString:@"https://api.twitter.com/oauth/request_token?oauth_consumer_key=aovoz75XqdBMGxj3F1dfg&oauth_nonce=2179941686152750588&oauth_signature=dC61tOolE2kkHbQilqY7zvrnoRA=&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1322307481&oauth_version=1.1"];
     
-    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
+    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token"];
+    
+    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:tReqUrl
                                                                    consumer:consumer
                                                                       token:nil
                                                                       realm:nil
