@@ -22,7 +22,7 @@
 //クラス変数
 @class CVTweetTagView;
 
-@interface CVTweetTagView : UIViewController<UITableViewDelegate,UITableViewDataSource>{
+@interface CVTweetTagView : UIViewController<UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate>{
     CVTweetTableViewController *cvTweetTable;
     NSMutableArray *userNameArray;
     NSMutableArray *tweetTextArray;
@@ -34,15 +34,20 @@
     BOOL firstloaded;           //ロードの初期化フラグ
     int reloadIntarval;
     int adjestAtIndex;
+    
     OAConsumer *consumer;
     OAToken *requestToken;
+//    NSString *kTwitterConsumerKey;
+//    NSString *kTwitterConsumerSecret;
 }
 @property (strong,nonatomic) NSString *hashTag;
 @property (strong,nonatomic) CVTweetTagView *detailView;
 @property (strong,nonatomic) UITableView *tableView;
 @property (strong,nonatomic) ACAccountStore *accountStore;
 @property (strong,nonatomic) NSMutableArray *grantedAccounts;
-@property (atomic,retain) NSString *accountId;
+@property (atomic,retain)    NSString *accountId;
+@property (atomic) BOOL firstLoad;
+@property (strong,nonatomic) OAToken *accessToken;
 
 - (UIImage *) makeThumbnailOfSize:(CGSize)size;
 @end

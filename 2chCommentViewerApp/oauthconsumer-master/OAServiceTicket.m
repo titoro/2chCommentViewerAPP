@@ -33,9 +33,13 @@
 - (id)initWithRequest:(OAMutableURLRequest *)aRequest response:(NSURLResponse *)aResponse data:(NSData *)aData didSucceed:(BOOL)success {
     if ((self = [super init])) {
 		request = aRequest;
+        NSLog(@"%@",request);
 		response = aResponse;
+        NSLog(@"%@",response);
 		data = aData;
+        NSLog(@"%@",data);
 		didSucceed = success;
+        NSLog(@"%d",didSucceed);
 	}
     return self;
 }

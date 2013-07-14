@@ -71,6 +71,8 @@
 																  data:responseData
 															didSucceed:[(NSHTTPURLResponse *)response statusCode] < 400];
 
+    //この警告文は無視しても問題ない
+    //http://captainshadow.hatenablog.com/entry/20121114/1352834276 参照
 	[delegate performSelector:didFinishSelector withObject:ticket withObject:responseData];
 //	[ticket release];
 }
