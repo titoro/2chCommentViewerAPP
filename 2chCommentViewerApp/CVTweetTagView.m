@@ -19,7 +19,7 @@
 @synthesize accountStore = _accountStore;
 @synthesize grantedAccounts = _grantedAccounts;
 @synthesize firstLoad = _firstLoad;
-@synthesize accessToken = _accessToken;
+//@synthesize accessToken = _accessToken;
 
 @synthesize tableView;
 @synthesize hashTag;
@@ -57,7 +57,7 @@
     OADataFetcher *fetcher = [[OADataFetcher alloc] init];
     
     //test code
-    NSURL *tReqUrl =[NSURL URLWithString:@"https://api.twitter.com/oauth/request_token?oauth_consumer_key=aovoz75XqdBMGxj3F1dfg&oauth_nonce=2179941686152750588&oauth_signature=dC61tOolE2kkHbQilqY7zvrnoRA=&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1322307481&oauth_version=1.1"];
+//    NSURL *tReqUrl =[NSURL URLWithString:@"https://api.twitter.com/oauth/request_token?oauth_consumer_key=aovoz75XqdBMGxj3F1dfg&oauth_nonce=2179941686152750588&oauth_signature=dC61tOolE2kkHbQilqY7zvrnoRA=&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1322307481&oauth_version=1.1"];
     
     NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token"];
     
@@ -146,29 +146,6 @@
 
 //
 - (void)requestTokenTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data {
-//    if (ticket.didSucceed) {
-//        NSString *responseBody =[[NSString alloc] initWithData:data
-//                               encoding:NSUTF8StringEncoding];
-//        NSLog(@"%@",data);
-//        NSLog(@"%@",responseBody);
-//        
-//        requestToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
-//        NSLog(@"%@",requestToken);
-//        
-//        
-//        NSString *urlString =
-//        [NSString stringWithFormat:
-//         @"https://api.twitter.com/oauth/authorize?oauth_token=%@",requestToken.key];
-//        
-//        NSURLRequest *urlRequest =
-//        [NSURLRequest requestWithURL:[NSURL URLWithString:urlString]];
-//        
-//        UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
-//        
-//        webView.delegate = self;
-//        [webView loadRequest:urlRequest];
-//        [self.view addSubview:webView];
-//    }
     if (ticket.didSucceed)
     {
         NSString *responseBody = [[NSString alloc] initWithData:data
@@ -176,22 +153,22 @@
         NSLog(@"%@",data);
         NSLog(@"%@",responseBody);
         
-        _accessToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
-        NSLog(@"%@",_accessToken);
+        requestToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
+        NSLog(@"%@",requestToken);
     
         NSString *address = [NSString stringWithFormat:
                              @"https://api.twitter.com/oauth/authorize?oauth_token=%@",
-                             _accessToken.key];
+                             requestToken.key];
         
         NSURL *url = [NSURL URLWithString:address];
 //        [[NSWorkspace sharedWorkspace] openURL:url];
         NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
 
-        UIWebView *webView = [[UIWebView alloc] initWithFrame:self.view.bounds];
+        webTweetView = [[UIWebView alloc] initWithFrame:self.view.bounds];
 
-        webView.delegate = self;
-        [webView loadRequest:urlRequest];
-        [self.view addSubview:webView];
+        webTweetView.delegate = self;
+        [webTweetView loadRequest:urlRequest];
+        [self.view addSubview:webTweetView];
 
         
     }
@@ -203,8 +180,7 @@
     // Dispose of any resources that can be recreated.
 }
 
-//- (void)requestTokenTicket:(OAServiceTicket *)ticket
-//         didFinishWithData:(NSData *)data {
+//- (void)requestTokenTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data {
 //    NSString *response = [[NSString alloc] initWithData:data
 //                                               encoding:NSUTF8StringEncoding];
 //    NSLog(@"Response: %@", response);
@@ -232,20 +208,20 @@
 // WebViewのデリゲートを設定しておいてください
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     
-//    if (_firstLoad) {
-//        [webView performSelector:@selector(stringByEvaluatingJavaScriptFromString:)
-//                      withObject: @"window.scrollBy(0,200)"
-//                      afterDelay: 0];
-//        _firstLoad = NO;
-//    } else {
-//        NSString *authPin = [self _getAuthPinInWebView:webView];
-//        
-//        if (authPin.length) {
-//            requestToken.verifier = authPin;
-//            [self _getAccessToken];
-//            return;
-//        }
-//    }
+   if (_firstLoad) {
+       [webView performSelector:@selector(stringByEvaluatingJavaScriptFromString:)
+                     withObject: @"window.scrollBy(0,200)"
+                     afterDelay: 0];
+       _firstLoad = NO;
+   } else {
+       NSString *authPin = [self _getAuthPinInWebView:webView];
+       
+       if (authPin.length) {
+           requestToken.verifier = authPin;
+           [self _getAccessToken];
+           return;
+       }
+   }
 }
 
 
@@ -265,6 +241,7 @@
         
         if (pin.length == 7) {
             return pin;
+            NSLog(@"%@",pin);
         }
     }
     
@@ -300,52 +277,54 @@
         
         _accessToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
         NSLog(@"%@",_accessToken);
-        
+        webTweetView.hidden = YES;
+        [self loadTagTweet:hashTag];
     }
     
 }
 
 //twitter OAuth Request
--(void)tweetOAuth:(NSString *)message{
-    //Current code is test
-    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token"];
-    
-    // サービスからアプリ用に割り当てられたKeyとSecret
-    NSString* consumerKey = @"aovoz75XqdBMGxj3F1dfg";
-    NSString* consumerSecret = @"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY";
-    
-    // API問い合わせにつかうクライアント単位のKeyとSecret
-    NSString* tokenKey = nil;
-    NSString* tokenSecret = nil;
-    
-    OAConsumer *consumerL = [[OAConsumer alloc]
-                            initWithKey:consumerKey secret:consumerSecret];
-    OAToken* token = tokenKey ? [[OAToken alloc]
-                                 initWithKey:tokenKey secret:tokenSecret]  : nil;
-    
-    // リクエストを生成する
-    OAMutableURLRequest *request = [[OAMutableURLRequest alloc]
-                                    initWithURL:url consumer:consumerL
-                                    token:token realm:nil signatureProvider:nil];
-    
-    // リクエストを実行する
-    OADataFetcher* fetcher = [[OADataFetcher alloc] init];
-    [fetcher fetchDataWithRequest:request
-                         delegate:self
-                didFinishSelector:@selector(requestTokenTicket:didFinishWithData:)
-                  didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
-    
-    [request setHTTPMethod:@"GET"];
-    NSString *bodyString = [NSString stringWithFormat:@"status=%@",
-                            (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(
-                                                                                         kCFAllocatorDefault,
-                                                                                         (__bridge CFStringRef)message,
-                                                                                         NULL,
-                                                                                         NULL,
-                                                                                         kCFStringEncodingUTF8)];
-    [request setHTTPBody:[bodyString dataUsingEncoding:NSUTF8StringEncoding]];
-    NSLog(@"%@",request);
-}
+/***  こちらは使用していない  ***/
+//-(void)tweetOAuth:(NSString *)message{
+//    //Current code is test
+//    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token"];
+//    
+//    // サービスからアプリ用に割り当てられたKeyとSecret
+//    NSString* consumerKey = @"aovoz75XqdBMGxj3F1dfg";
+//    NSString* consumerSecret = @"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY";
+//    
+//    // API問い合わせにつかうクライアント単位のKeyとSecret
+//    NSString* tokenKey = nil;
+//    NSString* tokenSecret = nil;
+//    
+//    OAConsumer *consumerL = [[OAConsumer alloc]
+//                            initWithKey:consumerKey secret:consumerSecret];
+//    OAToken* token = tokenKey ? [[OAToken alloc]
+//                                 initWithKey:tokenKey secret:tokenSecret]  : nil;
+//    
+//    // リクエストを生成する
+//    OAMutableURLRequest *request = [[OAMutableURLRequest alloc]
+//                                    initWithURL:url consumer:consumerL
+//                                    token:token realm:nil signatureProvider:nil];
+//    
+//    // リクエストを実行する
+//    OADataFetcher* fetcher = [[OADataFetcher alloc] init];
+//    [fetcher fetchDataWithRequest:request
+//                         delegate:self
+//                didFinishSelector:@selector(requestTokenTicket:didFinishWithData:)
+//                  didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
+//    
+//    [request setHTTPMethod:@"GET"];
+//    NSString *bodyString = [NSString stringWithFormat:@"status=%@",
+//                            (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(
+//                                                                                         kCFAllocatorDefault,
+//                                                                                         (__bridge CFStringRef)message,
+//                                                                                         NULL,
+//                                                                                         NULL,
+//                                                                                         kCFStringEncodingUTF8)];
+//    [request setHTTPBody:[bodyString dataUsingEncoding:NSUTF8StringEncoding]];
+//    NSLog(@"%@",request);
+//}
 
 //soial.frameworkを使ってツイート
 //ツイッター表示画面からのツイートに使用する予定

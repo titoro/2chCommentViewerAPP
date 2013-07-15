@@ -13,7 +13,6 @@
 		520A6012174F2090002D32E3 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 520A6011174F2090002D32E3 /* Twitter.framework */; };
 		5225D6DD17505E0F00706686 /* CVTweetTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5225D6DC17505E0F00706686 /* CVTweetTableViewController.m */; };
 		523F638817801A0900AEEEFE /* CVTweetTagView.m in Sources */ = {isa = PBXBuildFile; fileRef = 523F638717801A0900AEEEFE /* CVTweetTagView.m */; };
-		525AC13D1792AB83007171B9 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 525AC13C1792AB83007171B9 /* README */; };
 		525AC1A81792ACC7007171B9 /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 525AC1801792ACC7007171B9 /* NSMutableURLRequest+Parameters.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		525AC1A91792ACC7007171B9 /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 525AC1821792ACC7007171B9 /* NSString+URLEncoding.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		525AC1AA1792ACC7007171B9 /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 525AC1841792ACC7007171B9 /* NSURL+Base.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -403,7 +402,6 @@
 			files = (
 				527B773F1707CE68009D8187 /* InfoPlist.strings in Resources */,
 				525ACE5117659CC5005A5C3F /* Default-568h@2x.png in Resources */,
-				525AC13D1792AB83007171B9 /* README in Resources */,
 				525AC1B81792ACC7007171B9 /* OATestServer.rb in Resources */,
 				525AC1BB1792ACC7007171B9 /* README in Resources */,
 			);

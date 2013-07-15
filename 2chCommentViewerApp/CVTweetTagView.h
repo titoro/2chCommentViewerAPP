@@ -12,13 +12,7 @@
 #import "CVTweetTableViewController.h"
 #import <Twitter/TWRequest.h>
 #import <Twitter/TWTweetComposeViewController.h>
-#import "OAMutableURLRequest.h"
-#import "OARequestParameter.h"
-#import "OAServiceTicket.h"
-#import "OADataFetcher.h"
-#import "OAConsumer.h"
-#import "OAToken.h"
-
+#import "OAuthConsumer.h"
 //クラス変数
 @class CVTweetTagView;
 
@@ -37,12 +31,14 @@
     
     OAConsumer *consumer;
     OAToken *requestToken;
+    UIWebView *webTweetView;
 //    NSString *kTwitterConsumerKey;
 //    NSString *kTwitterConsumerSecret;
 }
 @property (strong,nonatomic) NSString *hashTag;
 @property (strong,nonatomic) CVTweetTagView *detailView;
 @property (strong,nonatomic) UITableView *tableView;
+
 @property (strong,nonatomic) ACAccountStore *accountStore;
 @property (strong,nonatomic) NSMutableArray *grantedAccounts;
 @property (atomic,retain)    NSString *accountId;
