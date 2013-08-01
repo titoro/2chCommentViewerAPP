@@ -46,7 +46,6 @@
 		527B77571707CE68009D8187 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 527B77551707CE68009D8187 /* InfoPlist.strings */; };
 		527B775A1707CE68009D8187 /* _chCommentViewerAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 527B77591707CE68009D8187 /* _chCommentViewerAppTests.m */; };
 		527B77721707D351009D8187 /* CVChannelListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527B77711707D351009D8187 /* CVChannelListController.m */; };
-		5289C58C17AA46240034F980 /* twitterKey.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5289C58B17AA46240034F980 /* twitterKey.txt */; };
 		52FD0FD01708BA9F00C9CC34 /* CVAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FD0FCF1708BA9F00C9CC34 /* CVAppController.m */; };
 		52FD0FD41708C2A300C9CC34 /* CVChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FD0FD31708C2A300C9CC34 /* CVChannel.m */; };
 		52FD0FD71708E82B00C9CC34 /* CVChannelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FD0FD61708E82B00C9CC34 /* CVChannelManager.m */; };
@@ -134,7 +133,6 @@
 		527B77591707CE68009D8187 /* _chCommentViewerAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _chCommentViewerAppTests.m; sourceTree = "<group>"; };
 		527B77701707D351009D8187 /* CVChannelListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVChannelListController.h; path = ../CVChannelListController.h; sourceTree = "<group>"; };
 		527B77711707D351009D8187 /* CVChannelListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVChannelListController.m; path = ../CVChannelListController.m; sourceTree = "<group>"; };
-		5289C58B17AA46240034F980 /* twitterKey.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = twitterKey.txt; sourceTree = "<group>"; };
 		52FD0FCE1708BA9F00C9CC34 /* CVAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVAppController.h; path = ../CVAppController.h; sourceTree = "<group>"; };
 		52FD0FCF1708BA9F00C9CC34 /* CVAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVAppController.m; path = ../CVAppController.m; sourceTree = "<group>"; };
 		52FD0FD21708C2A300C9CC34 /* CVChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVChannel.h; path = ../CVChannel.h; sourceTree = "<group>"; };
@@ -240,7 +238,6 @@
 		527B77251707CE68009D8187 = {
 			isa = PBXGroup;
 			children = (
-				5289C58B17AA46240034F980 /* twitterKey.txt */,
 				525AC13C1792AB83007171B9 /* README */,
 				5208A163177B9F5500B76980 /* Social.framework */,
 				525ACE5017659CC5005A5C3F /* Default-568h@2x.png */,
@@ -407,7 +404,6 @@
 				525ACE5117659CC5005A5C3F /* Default-568h@2x.png in Resources */,
 				525AC1B81792ACC7007171B9 /* OATestServer.rb in Resources */,
 				525AC1BB1792ACC7007171B9 /* README in Resources */,
-				5289C58C17AA46240034F980 /* twitterKey.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
