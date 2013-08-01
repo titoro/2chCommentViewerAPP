@@ -56,9 +56,6 @@
     
     OADataFetcher *fetcher = [[OADataFetcher alloc] init];
     
-    //test code
-//    NSURL *tReqUrl =[NSURL URLWithString:@"https://api.twitter.com/oauth/request_token?oauth_consumer_key=aovoz75XqdBMGxj3F1dfg&oauth_nonce=2179941686152750588&oauth_signature=dC61tOolE2kkHbQilqY7zvrnoRA=&oauth_signature_method=HMAC-SHA1&oauth_timestamp=1322307481&oauth_version=1.1"];
-    
     NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token"];
     
     OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
@@ -67,13 +64,7 @@
                                                                       realm:nil
                                                           signatureProvider:nil];
     
-    //test
-//    NSString *address = @"https://api.twitter.com/oauth/request_token&=aovoz75XqdBMGxj3F1dfg";
-//    NSURL *urlRequest = [NSURL URLWithString:address];
-//    NSMutableURLRequest *request = [NSURLRequest requestWithURL:urlRequest];
-    
     NSLog(@"%@",request);
-    
     [request setHTTPMethod:@"POST"];
     NSLog(@"%@",request);
     
@@ -82,33 +73,6 @@
                 didFinishSelector:@selector(requestTokenTicket:didFinishWithData:)
                   didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
     NSLog(@"%@",fetcher);
-
-//    consumer = [[OAConsumer alloc] initWithKey:kTwitterConsumerKey
-//                                         secret:kTwitterConsumerSecret];
-//    
-//    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token"];
-//    
-//    OAMutableURLRequest *request =[[OAMutableURLRequest alloc]
-//      initWithURL:url
-//      consumer:consumer
-//      token:nil
-//      realm:nil
-//      signatureProvider:nil];
-//    
-//    NSLog(@"%@",request);
-//    
-//    [request setHTTPMethod:@"POST"];
-//    
-//    OADataFetcher *fetcher = [[OADataFetcher alloc] init];
-//    
-//    [fetcher fetchDataWithRequest:request
-//                         delegate:self
-//                didFinishSelector:@selector(requestTokenTicket:didFinishWithData:)
-//                  didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
-
-    //twitterハッシュタグ検索結果を取得
-    //[self loadTagTweet:hashTag];
-    //[self tweetOAuth:hashTag];
     
 }
 
@@ -144,7 +108,7 @@
 //    [self loadTagTweet:hashTag];
 }
 
-//
+//リクエストトークン取得
 - (void)requestTokenTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data {
     if (ticket.didSucceed)
     {
@@ -186,10 +150,11 @@
 //    NSLog(@"Response: %@", response);
 //}
 
+//リクエストトークン取得の失敗時の処理
 - (void)requestTokenTicket:(OAServiceTicket *)ticket didFailWithError:(NSError*)error {
     NSLog(@"Error: %@", error);
 }
-
+//リクエストトークン取得時の処理
 - (void)ticket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data {
     NSString *dataString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSLog(@"data: %@", dataString);
@@ -205,7 +170,7 @@
     // Release any retained subviews of the main view.
 }
 
-// WebViewのデリゲートを設定しておいてください
+// -WebViewのデリゲートを設定しておいてください
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     
    if (_firstLoad) {
@@ -225,7 +190,7 @@
 }
 
 
-// Twitter-OAuth-iPhoneから引用させていただきました
+// -Twitter-OAuth-iPhoneから引用させていただきました
 - (NSString *)_getAuthPinInWebView: (UIWebView *) theWebView {
     // Look for either 'oauth-pin' or 'oauth_pin' in the raw HTML
     NSString *js = @"var d = document.getElementById('oauth-pin'); if (d == null) d = document.getElementById('oauth_pin'); if (d) d = d.innerHTML; d;";
@@ -233,6 +198,7 @@
     
     if (pin.length == 7) {
         return pin;
+        NSLog(@"%@",pin);
     } else {
         // New version of Twitter PIN page
         js = @"var d = document.getElementById('oauth-pin'); if (d == null) d = document.getElementById('oauth_pin'); " \
@@ -278,13 +244,16 @@
         _accessToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
         NSLog(@"%@",_accessToken);
         webTweetView.hidden = YES;
-        [self loadTagTweet:hashTag];
+        
+        //取得したアクセストークンをDefaultUserInfoへ保存 
+        [_accessToken storeInUserDefaultsWithServiceProviderName:@"NAME" prefix:@"KEY"];
+        [self loadSearchTweet:hashTag];
     }
     
 }
 
 //twitter OAuth Request
-/***  こちらは使用していない  ***/
+/***  こちらは使用していない為コメントアウト  ***/
 //-(void)tweetOAuth:(NSString *)message{
 //    //Current code is test
 //    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token"];
@@ -410,7 +379,51 @@
     
 }
 
+//引数の言葉で検索し、結果を取得
+- (void)loadSearchTweet:(NSString *)str{
+
+    //リロードフラグをNOにする
+    if (tweetreloaded) {
+        tweetreloaded = NO;
+    }
+    
+    //TwitterのACAccountTypeオブジェクトを取得し、それを元にアカウントを取得
+    ACAccountType *accountType = [_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+    NSArray *accounts = [_accountStore accountsWithAccountType:accountType];
+    if (accounts.count == 0) {
+        NSLog(@"Please add twitter account on Settings");
+        return;
+    }
+    
+    //アカウントを使ってAPIにアクセスするなどの許可を得る
+    [_accountStore requestAccessToAccountsWithType:accountType
+                                           options:nil
+                                        completion:^(BOOL granted, NSError *error) {
+                                            dispatch_async(dispatch_get_main_queue(), ^{
+                                                if (granted) {
+                                                    _grantedAccounts = [_accountStore accountsWithAccountType:accountType];
+                                                } else {
+                                                    NSLog(@"User denied to access twitter account.");
+                                                }
+                                            });
+                                        }];
+
+
+}
+
+// 今回あんまり関係ないけど通信のお約束処理
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response
+{
+//    self.responseData = [NSMutableData data];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+//    [self.responseData appendData:data];
+}
+
 //Twitterのタグ検索を取得する
+//こちらは現在使用していない
 -(void)loadTagTweet:(NSString *)str{
     
     //リロードフラグをNOにする

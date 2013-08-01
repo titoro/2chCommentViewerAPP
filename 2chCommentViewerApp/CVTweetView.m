@@ -75,6 +75,7 @@ extern NSString *touchedTable;
     //Interval after timeline reload
     //リロード自動で行うための処理
     //リロード機能未実装の為、現在コメントアウト
+    //かわりにUser Streams を取得して表示するよう変更するかも？
 //    reloadIntarval = 30;
 //   [NSTimer scheduledTimerWithTimeInterval:(reloadIntarval) target:self selector:@selector(reloadTweet)
 //                                   userInfo:nil repeats:YES];
@@ -261,48 +262,6 @@ extern NSString *touchedTable;
 //Twitterのタイムラインを取得する
 -(void)loadTimelineTweet{
     
-//未認可のリクエストトークンをtwitterから取得
-//現在は使用していないためコメントアウト
-/******************************************************************/
-//        OAConsumer *consumer =
-//        [[OAConsumer alloc] initWithKey:@"aovoz75XqdBMGxj3F1dfg"
-//                                secret:@"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY"];
-//        OAToken *accessToken =
-//            [[OAToken alloc] initWithKey:@"215992182-56ELH2oBtBmYqltZHIwEk31ieF70e2YDii5RpHIX"
-//                            secret:@"oGxMWDDJ0mtE0uzpukeb15pHP6W8iJjijmSUKUAYecI"];
-    
-//        NSURL *url = [NSURL URLWithString:@"http://api.twitter.com/1.1/statuses/firehose"];
-//    
-//        OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
-//                                                                     consumer:consumer
-//                                                                        token:accessToken
-//                                                                        realm:nil
-//                                                            signatureProvider:nil];
-//    
-//        [request setHTTPMethod:@"GET"];
-    
-//        OADataFetcher *fetcher = [[OADataFetcher alloc] init];
-//    
-//        [fetcher fetchDataWithRequest:request
-//                             delegate:self
-//                    didFinishSelector:@selector(requestTokenTicket:didFinishWithData:)
-//                      didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
-//    
-//    
-//        accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-//    
-//    	[accountStore requestAccessToAccountsWithType:accountType withCompletionHandler:^(BOOL granted, NSError *error) {
-//    		if(granted)
-//    		{
-//    			NSArray *accountstores = [accountStore accountsWithAccountType:accountType];
-//    			if([accountstores count] > 0)
-//    			{
-//    				account = [accountstores objectAtIndex:0];
-//    				self.accountId = account.identifier;
-//    			}
-//    		}
-//    }];
-/************************************************************************/
     //リロードフラグをNOにする
     if (tweetreloaded == YES) {
         tweetreloaded = NO;
@@ -318,49 +277,6 @@ extern NSString *touchedTable;
         NSLog(@"Please add twitter account on Settings");
         return;
     }
-    
-/**  ユーザ認証の機能は追加する  **/
-//    ACAccountStore *accountStoreTw = [[ACAccountStore alloc]init];
-//    ACAccountType *accountType = [_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    
-    //ユーザに認証してもらう
-//    [_accountStore requestAccessToAccountsWithType:accountType
-//                                           options:nil
-//                                        completion:^(BOOL granted, NSError *error) {
-//                                            dispatch_async(dispatch_get_main_queue(), ^{
-//                                                if (granted) {
-////                                                    //grantedAccounts
-////                                                    _grantedAccounts = [_accountStore accountsWithAccountType:accountType];
-//                                                } else {
-//                                                    NSLog(@"User denied to access twitter account.");
-//                                                }
-//                                            });
-//                                        }];
-//    /***************************/
-//    
-//    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/home_timeline.json"];
-//    SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter
-//                                            requestMethod:SLRequestMethodGET
-//                                                      URL:url
-//                                               parameters:nil];
-//    
-//    // とりあえず取得したアカウントの一番最初のものを使う
-//    [request setAccount:[_grantedAccounts objectAtIndex:0]];
-//    [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-//            NSUInteger statusCode = urlResponse.statusCode;
-//            if (200 <= statusCode && statusCode < 300) {
-//                // JSONをパース
-//                NSArray *tweets = [NSJSONSerialization JSONObjectWithData:responseData options:0 error:nil];
-//                // APIから取得した
-//                
-//            } else {
-//                // エラー時の処理
-//            }
-//        });
-//    }];
-    
-/*************************************************************************************/
     
     [_accountStore requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
         if(granted){

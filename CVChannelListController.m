@@ -189,12 +189,11 @@ NSString *touchedTable;
         // 行が選択された場合の処理。
         CVTweetView *cvTweetView = [[CVTweetView alloc]init];
         [self.navigationController pushViewController:cvTweetView animated:YES];
+    }else{
+        //Tweeterタイムラインセル選択時以外はタグ検索画面へ
+        CVTweetTagView *cvTweetTagView = [[CVTweetTagView alloc]init];
+        [self.navigationController pushViewController:cvTweetTagView animated:YES];
     }
-    
-    //Tweeterタイムラインセル選択時以外はタグ検索画面へ
-    CVTweetTagView *cvTweetTagView = [[CVTweetTagView alloc]init];
-    [self.navigationController pushViewController:cvTweetTagView animated:YES];
-
 }
 
 //編集ボタンの場合
