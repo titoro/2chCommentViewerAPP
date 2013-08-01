@@ -23,7 +23,7 @@ extern NSString *touchedTable;
 
 - (id)initWithStyle:(UITableViewStyle)theStyle
 {
-    self = [super init];    // xib ファイルは使わないと仮定。
+    self = [super init];    // xib ファイルは使わない。
     if (self != nil) {
         style = theStyle;
     }
