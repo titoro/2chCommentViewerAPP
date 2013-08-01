@@ -102,6 +102,7 @@ extern NSString *touchedTable;
     NSURL *url = [NSURL URLWithString:@"http://twitter.com/statuses/update.json"];
     
     // サービスからアプリ用に割り当てられたKeyとSecret
+    //ここも変更
     NSString* consumerKey = @"aovoz75XqdBMGxj3F1dfg";
     NSString* consumerSecret = @"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY";
     
