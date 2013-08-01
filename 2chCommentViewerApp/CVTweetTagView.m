@@ -48,6 +48,7 @@
     hashTag = @"あまちゃん";
     
     // サービスからアプリ用に割り当てられたKeyとSecret を設定
+    //処理の書き換え。ファイルから情報を取得してくるように。
     NSString* kTwitterConsumerKey = @"aovoz75XqdBMGxj3F1dfg";
     NSString* kTwitterConsumerSecret = @"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY";
 
