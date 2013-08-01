@@ -437,7 +437,7 @@
     //TwitterのACAccountTypeオブジェクトを取得し、それを元にアカウントを取得
     ACAccountType *accountType = [_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     NSArray *accounts = [_accountStore accountsWithAccountType:accountType];
-    NSLog(@"%@",accounts);
+//    NSLog(@"%@",accounts);
     if (accounts.count == 0) {
         NSLog(@"Please add twitter account on Settings");
         return;
