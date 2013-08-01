@@ -48,15 +48,23 @@
     hashTag = @"あまちゃん";
     
     // サービスからアプリ用に割り当てられたKeyとSecret を設定
-    //処理の書き換え。ファイルから情報を取得してくるように。
-    NSError* err = nil;
-    NSString* str = [NSString stringWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterKey.txt" encoding:NSUTF8StringEncoding error:&err];
+    //処理の書き換え
+    NSError* err1 = nil;
+    NSError* err2 = nil;
     
-    NSLog(@"%@",str);
+    NSString* kTwitterConsumerKey = [NSString stringWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterConsKey.txt" encoding:NSUTF8StringEncoding error:&err1];
     
-    NSString* kTwitterConsumerKey = @"aovoz75XqdBMGxj3F1dfg";
-    NSString* kTwitterConsumerSecret = @"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY";
+    NSString* kTwitterConsumerSecret = [NSString stringWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterSecretKey.txt" encoding:NSUTF8StringEncoding error:&err2];
+    
+//    NSLog(@"%@",str);
+//    
+//    NSString* kTwitterConsumerKey = @"aovoz75XqdBMGxj3F1dfg";
+//    NSString* kTwitterConsumerSecret = @"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY";
+    
 
+    NSLog(@"%@",kTwitterConsumerKey);
+    NSLog(@"%@",kTwitterConsumerSecret);
+    
     consumer = [[OAConsumer alloc] initWithKey:kTwitterConsumerKey
                                                     secret:kTwitterConsumerSecret];
     
