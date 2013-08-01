@@ -49,6 +49,11 @@
     
     // サービスからアプリ用に割り当てられたKeyとSecret を設定
     //処理の書き換え。ファイルから情報を取得してくるように。
+    NSError* err = nil;
+    NSString* str = [NSString stringWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterKey.txt" encoding:NSUTF8StringEncoding error:&err];
+    
+    NSLog(@"%@",str);
+    
     NSString* kTwitterConsumerKey = @"aovoz75XqdBMGxj3F1dfg";
     NSString* kTwitterConsumerSecret = @"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY";
 
