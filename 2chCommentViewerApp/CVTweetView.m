@@ -103,8 +103,13 @@ extern NSString *touchedTable;
     
     // サービスからアプリ用に割り当てられたKeyとSecret
     //ここも変更
-    NSString* consumerKey = @"aovoz75XqdBMGxj3F1dfg";
-    NSString* consumerSecret = @"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY";
+    //処理の書き換え
+    NSError* err1 = nil;
+    NSError* err2 = nil;
+    
+    NSString* consumerKey = [NSString stringWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterConsKey.txt" encoding:NSUTF8StringEncoding error:&err1];
+    
+    NSString* consumerSecret = [NSString stringWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterSecretKey.txt" encoding:NSUTF8StringEncoding error:&err2];
     
     // API問い合わせにつかうクライアント単位のKeyとSecret
     NSString* tokenKey = nil;

@@ -49,12 +49,22 @@
     
     // サービスからアプリ用に割り当てられたKeyとSecret を設定
     //処理の書き換え
-    NSError* err1 = nil;
-    NSError* err2 = nil;
+//    NSError* err1 = nil;
+//    NSError* err2 = nil;
     
-    NSString* kTwitterConsumerKey = [NSString stringWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterConsKey.txt" encoding:NSUTF8StringEncoding error:&err1];
+//    NSString* kTwitterConsumerKey = [NSString stringWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterConsKey.txt" encoding:NSUTF8StringEncoding error:&err1];
+//    
+//    NSString* kTwitterConsumerSecret = [NSString stringWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterSecretKey.txt" encoding:NSUTF8StringEncoding error:&err2];
+
+    NSString *kTwitterConsumerKey;
+    NSString *kTwitterConsumerSecret;
     
-    NSString* kTwitterConsumerSecret = [NSString stringWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterSecretKey.txt" encoding:NSUTF8StringEncoding error:&err2];
+    NSArray *kTwitterConsKeyArray = [NSArray arrayWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterConsKey.xml"];
+    
+    if(kTwitterConsKeyArray.count ==2){
+        kTwitterConsumerKey = kTwitterConsKeyArray[0];
+        kTwitterConsumerSecret = kTwitterConsKeyArray[1];
+    }   
     
 //    NSLog(@"%@",str);
 //    
