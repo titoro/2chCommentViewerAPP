@@ -56,27 +56,23 @@
 //    
 //    NSString* kTwitterConsumerSecret = [NSString stringWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterSecretKey.txt" encoding:NSUTF8StringEncoding error:&err2];
 
-    NSString *kTwitterConsumerKey;
-    NSString *kTwitterConsumerSecret;
+    NSString *kTwitterConsumerKey;      //ConsumerKey
+    NSString *kTwitterConsumerSecret;   //ConsumerSecretKey
     
+    //ConsumerKeyとSecretKeyの読み込み
     NSArray *kTwitterConsKeyArray = [NSArray arrayWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterConsKey.xml"];
     
     if(kTwitterConsKeyArray.count ==2){
         kTwitterConsumerKey = kTwitterConsKeyArray[0];
         kTwitterConsumerSecret = kTwitterConsKeyArray[1];
-    }   
+    }
     
-//    NSLog(@"%@",str);
-//    
-//    NSString* kTwitterConsumerKey = @"aovoz75XqdBMGxj3F1dfg";
-//    NSString* kTwitterConsumerSecret = @"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY";
-    
-
     NSLog(@"%@",kTwitterConsumerKey);
     NSLog(@"%@",kTwitterConsumerSecret);
     
     consumer = [[OAConsumer alloc] initWithKey:kTwitterConsumerKey
                                                     secret:kTwitterConsumerSecret];
+    NSLog(@"%@",consumer);
     
     OADataFetcher *fetcher = [[OADataFetcher alloc] init];
     
@@ -149,7 +145,6 @@
                              requestToken.key];
         
         NSURL *url = [NSURL URLWithString:address];
-//        [[NSWorkspace sharedWorkspace] openURL:url];
         NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url];
 
         webTweetView = [[UIWebView alloc] initWithFrame:self.view.bounds];
@@ -167,12 +162,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-//- (void)requestTokenTicket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data {
-//    NSString *response = [[NSString alloc] initWithData:data
-//                                               encoding:NSUTF8StringEncoding];
-//    NSLog(@"Response: %@", response);
-//}
 
 //リクエストトークン取得の失敗時の処理
 - (void)requestTokenTicket:(OAServiceTicket *)ticket didFailWithError:(NSError*)error {
@@ -194,7 +183,7 @@
     // Release any retained subviews of the main view.
 }
 
-// -WebViewのデリゲートを設定しておいてください
+// -WebViewのデリゲート設定
 - (void)webViewDidFinishLoad:(UIWebView *)webView {
     
    if (_firstLoad) {
@@ -214,15 +203,16 @@
 }
 
 
-// -Twitter-OAuth-iPhoneから引用させていただきました
+// -Twitter-OAuth-iPhoneから引用
 - (NSString *)_getAuthPinInWebView: (UIWebView *) theWebView {
     // Look for either 'oauth-pin' or 'oauth_pin' in the raw HTML
     NSString *js = @"var d = document.getElementById('oauth-pin'); if (d == null) d = document.getElementById('oauth_pin'); if (d) d = d.innerHTML; d;";
     NSString *pin = [[theWebView stringByEvaluatingJavaScriptFromString: js] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
     if (pin.length == 7) {
-        return pin;
         NSLog(@"%@",pin);
+        webTweetView.hidden = YES;
+        return pin;
     } else {
         // New version of Twitter PIN page
         js = @"var d = document.getElementById('oauth-pin'); if (d == null) d = document.getElementById('oauth_pin'); " \
@@ -230,8 +220,9 @@
         pin = [[theWebView stringByEvaluatingJavaScriptFromString: js] stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceAndNewlineCharacterSet]];
         
         if (pin.length == 7) {
-            return pin;
             NSLog(@"%@",pin);
+            webTweetView.hidden = YES;
+            return pin;
         }
     }
     
@@ -267,7 +258,6 @@
         
         _accessToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
         NSLog(@"%@",_accessToken);
-        webTweetView.hidden = YES;
         
         //取得したアクセストークンをDefaultUserInfoへ保存 
         [_accessToken storeInUserDefaultsWithServiceProviderName:@"NAME" prefix:@"KEY"];
@@ -276,48 +266,6 @@
     
 }
 
-//twitter OAuth Request
-/***  こちらは使用していない為コメントアウト  ***/
-//-(void)tweetOAuth:(NSString *)message{
-//    //Current code is test
-//    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token"];
-//    
-//    // サービスからアプリ用に割り当てられたKeyとSecret
-//    NSString* consumerKey = @"aovoz75XqdBMGxj3F1dfg";
-//    NSString* consumerSecret = @"8UsZnHi2R2jJ8VVYmaGaMq1J0s0q7GFuqNeknQbY";
-//    
-//    // API問い合わせにつかうクライアント単位のKeyとSecret
-//    NSString* tokenKey = nil;
-//    NSString* tokenSecret = nil;
-//    
-//    OAConsumer *consumerL = [[OAConsumer alloc]
-//                            initWithKey:consumerKey secret:consumerSecret];
-//    OAToken* token = tokenKey ? [[OAToken alloc]
-//                                 initWithKey:tokenKey secret:tokenSecret]  : nil;
-//    
-//    // リクエストを生成する
-//    OAMutableURLRequest *request = [[OAMutableURLRequest alloc]
-//                                    initWithURL:url consumer:consumerL
-//                                    token:token realm:nil signatureProvider:nil];
-//    
-//    // リクエストを実行する
-//    OADataFetcher* fetcher = [[OADataFetcher alloc] init];
-//    [fetcher fetchDataWithRequest:request
-//                         delegate:self
-//                didFinishSelector:@selector(requestTokenTicket:didFinishWithData:)
-//                  didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
-//    
-//    [request setHTTPMethod:@"GET"];
-//    NSString *bodyString = [NSString stringWithFormat:@"status=%@",
-//                            (__bridge NSString *)CFURLCreateStringByAddingPercentEscapes(
-//                                                                                         kCFAllocatorDefault,
-//                                                                                         (__bridge CFStringRef)message,
-//                                                                                         NULL,
-//                                                                                         NULL,
-//                                                                                         kCFStringEncodingUTF8)];
-//    [request setHTTPBody:[bodyString dataUsingEncoding:NSUTF8StringEncoding]];
-//    NSLog(@"%@",request);
-//}
 
 //soial.frameworkを使ってツイート
 //ツイッター表示画面からのツイートに使用する予定
@@ -411,6 +359,8 @@
         tweetreloaded = NO;
     }
     
+    //ACAccountStoreオブジェクトを生成
+    _accountStore = [[ACAccountStore alloc] init];
     //TwitterのACAccountTypeオブジェクトを取得し、それを元にアカウントを取得
     ACAccountType *accountType = [_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     NSArray *accounts = [_accountStore accountsWithAccountType:accountType];
@@ -418,6 +368,7 @@
         NSLog(@"Please add twitter account on Settings");
         return;
     }
+    
     
     //アカウントを使ってAPIにアクセスするなどの許可を得る
     [_accountStore requestAccessToAccountsWithType:accountType
@@ -432,7 +383,144 @@
                                             });
                                         }];
 
+    
+    //検索結果を取得
+//    NSString *urlString =
+//        [NSURL URLWithString:@"https://api.twitter.com/1.1/search/tweets.json?q=あまちゃん"];
+//    NSURL *encodedUrl = [NSURL URLWithString:urlString];
+//    NSString *encodedUrlString = [encodedUrl absoluteString];
+//    NSURL *url = [NSURL URLWithString:encodedUrlString];
+    
+    NSString *urlString = @"https://api.twitter.com/1.1/search/tweets.json?q=あまちゃん";
+    [urlString stringByAddingPercentEscapesUsingEncoding:NSASCIIStringEncoding];
+    NSURL *url = [NSURL URLWithString:urlString];
+    NSLog(@"%@",urlString);
+    NSLog(@"%@",url);
+    
+    NSString *kTwitterConsumerKey;      //ConsumerKey
+    NSString *kTwitterConsumerSecret;   //ConsumerSecretKey
+    
+    //ConsumerKeyとSecretKeyの読み込み
+    NSArray *kTwitterConsKeyArray = [NSArray arrayWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterConsKey.xml"];
+    
+    if(kTwitterConsKeyArray.count ==2){
+        kTwitterConsumerKey = kTwitterConsKeyArray[0];
+        kTwitterConsumerSecret = kTwitterConsKeyArray[1];
+    }
+    else{
+        return; //ConsumerKeyの読み込み失敗
+    }
+    OAConsumer *consumerKey = [[OAConsumer alloc] initWithKey:kTwitterConsumerKey
+                                                     secret:kTwitterConsumerSecret];
+    NSLog(@"%@",consumerKey);
+    
+    //AccessTokenをDefaultUserInfoから読み込み
+    OAToken *accessToken =[[OAToken alloc] initWithUserDefaultsUsingServiceProviderName:@"NAME"
+                           
+                                                                                 prefix:@"KEY"];
+    NSLog(@"%@",accessToken);
+    
+//    OAToken *token = [[OAToken alloc] initWithKey:@"ACCESS_TOKEN"
+//                                            secret:@"ACCESS_SECRET_TOKEN"];
+    
+//    OAMutableURLRequest *requestWithBodyParams = [[[OAMutableURLRequest alloc] initWithURL:url
+//                                                   
+//                                                                                  consumer:consumer
+//                                                   
+//                                                                                     token:accessToken
+//                                                   
+//                                                                                     realm:nil
+//                                                   
+//                                                                         signatureProvider:nil] autorelease];
+//    
+//    NSString *encodedParameterPairs= [NSString stringWithFormat:@"status=%@", [message URLEncodedString]];
+//    
+//    NSData *requestData = [encodedParameterPairs dataUsingEncoding:NSASCIIStringEncoding
+//                         
+//                                            allowLossyConversion:YES];
+//    
+//    [requestWithBodyParams setHTTPBody:requestData];
+//    
+//    [requestWithBodyParams setValue:[NSString stringWithFormat:@"%d", [requestData length]]
+//     
+//                 forHTTPHeaderField:@"Content-Length"];
+//    
+//    [requestWithBodyParams setValue:@"application/x-www-form-urlencoded"
+//     
+//                 forHTTPHeaderField:@"Content-Type"];    
+//    
+//    [requestWithBodyParams setHTTPMethod:@"POST"];
+    
 
+    NSLog(@"%@",url);
+    
+    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
+                                                                    consumer:consumerKey
+                                                                       token:accessToken
+                                                                       realm:nil
+                                                           signatureProvider:nil];
+    //NSMutableArray *params = [NSMutableArray array];
+	//[params addObject:[OARequestParameter requestParameter:@"format" value:@"json"]];
+	
+	[request setHTTPMethod:@"GET"];
+	//[request setParameters:params];
+	[request prepare];
+    NSLog(@"%@",request.URL);
+	
+	NSURLResponse *response;
+	NSError *error = nil;
+	NSData *result = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+	NSLog(@"result: %@", [[NSString alloc] initWithData:result encoding:NSUTF8StringEncoding]);
+	NSLog(@"error: %@", error);
+    
+//    [request setHTTPMethod:@"GET"];
+//    OADataFetcher *fetcher = [[OADataFetcher alloc] init];
+//    [fetcher fetchDataWithRequest:request
+//                         delegate:self
+//                didFinishSelector:@selector(searchTokenticket:didFinishWithData:)
+//                  didFailSelector:@selector(searchTokenticket:didFailWithError:)];
+//    
+    
+    //TwitterAPIへアクセス、検索結果を取得
+    //ACAccountStoreオブジェクトを生成
+//    _accountStore = [[ACAccountStore alloc] init];
+//    
+//    //TwitterのACAccountTypeオブジェクトを取得し、それを元にアカウントを取得
+//    ACAccountType *accountType = [_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
+//    NSArray *accounts = [_accountStore accountsWithAccountType:accountType];
+//    if (accounts.count == 0) {
+//        NSLog(@"Please add twitter account on Settings");
+//        return;
+//    }
+//    
+//    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/search/tweets.json?q=あまちゃん"];
+//    
+//    OAMutableURLRequest *request = [[OAMutableURLRequest alloc]
+//                                    initWithURL:url
+//                                    consumer:consumer
+//                                    token:_accessToken
+//                                    realm:nil
+//                                    signatureProvider:nil];
+//    
+//    [request setHTTPMethod:@"GET"];
+//    
+//    OADataFetcher *fetcher = [[OADataFetcher alloc] init];
+//    
+//    [fetcher fetchDataWithRequest:request
+//                         delegate:self
+//                didFinishSelector:@selector(searchToken:didFinishWithData:)
+//                  didFailSelector:@selector(searchToken:didFailWithError:)];
+    
+
+    
+    
+}
+-(void)searchTokenticket:(OAServiceTicket *)ticket didFinishWithData:(NSData *)data{
+    NSString *searchData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSLog(@"%@",searchData);
+}
+-(void)searchTokenticket:(OAServiceTicket *)ticket didFailWithError:(NSError *)error{
+    NSLog(@"%@",error);
 }
 
 // 今回あんまり関係ないけど通信のお約束処理

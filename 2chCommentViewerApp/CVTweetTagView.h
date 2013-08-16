@@ -40,7 +40,7 @@
 @property (strong,nonatomic) UITableView *tableView;
 
 @property (strong,nonatomic) ACAccountStore *accountStore;
-@property (strong,nonatomic) NSMutableArray *grantedAccounts;
+@property (strong,nonatomic) NSArray *grantedAccounts;
 @property (atomic,retain)    NSString *accountId;
 @property (atomic) BOOL firstLoad;
 @property (strong,nonatomic) OAToken *accessToken;
