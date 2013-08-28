@@ -259,7 +259,7 @@
                                encoding:NSUTF8StringEncoding];
         
         _accessToken = [[OAToken alloc] initWithHTTPResponseBody:responseBody];
-        NSLog(@"%@",_accessToken);
+//        NSLog(@"%@",_accessToken);
         
         //取得したアクセストークンをDefaultUserInfoへ保存 
         [_accessToken storeInUserDefaultsWithServiceProviderName:@"NAME" prefix:@"KEY"];
@@ -336,18 +336,18 @@
     }
     
     //ユーザ名を設定
-    //cell.detailTextLabel.text = [userNameArray objectAtIndex:indexPath.row];
+    cell.detailTextLabel.text = [userNameArray objectAtIndex:indexPath.row];
     //つぶやきを設定
     cell.textLabel.text = [tweetTextArray objectAtIndex:indexPath.row];
     
     //アイコン画像を設定
-//    NSString* iconPath = [tweetIconArray objectAtIndex:indexPath.row];
-//    NSURL* url = [NSURL URLWithString:iconPath];
-//    NSData* data = [NSData dataWithContentsOfURL:url];
-//    cell.imageView.contentMode = UIViewContentModeLeft;
-//    UIImage* img = [[UIImage alloc] initWithData:data];
+    NSString* iconPath = [tweetIconArray objectAtIndex:indexPath.row];
+    NSURL* url = [NSURL URLWithString:iconPath];
+    NSData* data = [NSData dataWithContentsOfURL:url];
+    cell.imageView.contentMode = UIViewContentModeLeft;
+    UIImage* img = [[UIImage alloc] initWithData:data];
 //    //    UIImage *img = [orgImg makeThumbnailOfSize:CGSize(50,50)];
-//    cell.imageView.image = img;
+    cell.imageView.image = img;
     
     return cell;
     
@@ -513,7 +513,7 @@
 //    jstr = [[cricket_left stringByAppendingString:jstr] stringByAppendingString:cricket_right];
 //    NSLog(@"%@",jstr);
     NSData *json_data = [jstr dataUsingEncoding:NSUnicodeStringEncoding];
-    NSLog(@"%@",json_data);
+//    NSLog(@"%@",json_data);
     
     NSDictionary *searchDictinary = [NSJSONSerialization JSONObjectWithData:json_data
                                                             options:NSJSONReadingAllowFragments error:&jsonError];
@@ -538,6 +538,11 @@
                       NSLog(@"%@",[tweet objectForKey:@"text"]);
                      [tweetTextArray addObject:[tweet objectForKey:@"text"]];
                     tempcount += 1;
+                    NSDictionary *user = [tweet objectForKey:@"user"];
+                    [userNameArray addObject:[user objectForKey:@"screen_name"]];
+                    [tweetIconArray addObject:[user objectForKey:@"profile_image_url"]];
+                    NSLog(@"%@",[user objectForKey:@"screen_name"]);
+                    NSLog(@"%@",[user objectForKey:@"profile_image_url"]);
                 }
 //         NSLog(@"%@",tweetTextArray);
       }
@@ -546,11 +551,8 @@
 //    } else {
 //        NSLog(@"Failed to open stream.");
 //    }
+    //最初のロード成功
      firstloaded = YES;
-    for(NSString* tweet in tweetTextArray){
-        NSLog(@"%@",tweet);
-    }
-
     [self.tableView reloadData];
 }
 
@@ -570,7 +572,7 @@
 }
 
 //Twitterのタグ検索を取得する
-//こちらは現在使用していない
+/***********************こちらは現在使用していない**************************/
 -(void)loadTagTweet:(NSString *)str{
     
     //リロードフラグをNOにする
@@ -637,6 +639,26 @@
     }];
 }
 
+// セルの高さを返す. セルが生成される前に実行されるので独自に計算する必要がある
+- (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath {
+	if(!tweetreloaded){
+        return 50;
+    }
+    UITableViewCell *cell = [self tableView:self.tableView cellForRowAtIndexPath:indexPath];
+	CGSize bounds = CGSizeMake(self.tableView.frame.size.width, self.tableView.frame.size.height);
+    //textLabelのサイズ
+ 	CGSize size = [cell.textLabel.text sizeWithFont:cell.textLabel.font
+                                  constrainedToSize:bounds
+                                      lineBreakMode:NSLineBreakByCharWrapping];
+    //detailTextLabelのサイズ
+	CGSize detailSize = [cell.detailTextLabel.text sizeWithFont: cell.detailTextLabel.font
+                                              constrainedToSize: bounds
+                                                  lineBreakMode: NSLineBreakByCharWrapping];
+    //サイズ調整用
+    int sizeAdjustment = 80;
+    
+    return size.height + detailSize.height + sizeAdjustment;
+}
 
 //アイコン画像のリサイズ用
 - (UIImage *) makeThumbnailOfSize:(CGSize)size;
