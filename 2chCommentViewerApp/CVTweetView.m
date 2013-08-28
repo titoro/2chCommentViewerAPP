@@ -291,6 +291,7 @@ extern NSString *touchedTable;
             if (accounts != nil && [accounts count] != 0) {
                 ACAccount *twAccount = [accounts objectAtIndex:0];
                 NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/1.1/statuses/home_timeline.json"];
+                NSLog(@"%@",[url absoluteString]);
                 NSDictionary *params = [NSDictionary dictionaryWithObject:@"1" forKey:@"include_entities"];
                 SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:url parameters:params];
                 request.account = twAccount;
@@ -301,8 +302,9 @@ extern NSString *touchedTable;
                         if(timeline){
                             NSString *output = [NSString stringWithFormat:@"HTTP response status: %ld",(long)[urlResponse statusCode]];
                             NSLog(@"%@", output);
-                            //NSLog(@"%@",timeline);
+                            NSLog(@"%@",timeline);
                             for (NSDictionary *tweet in timeline) {
+                                NSLog(@"%@",tweet);
                                 [tweetTextArray addObject:[tweet objectForKey:@"text"]];
                                 NSDictionary *user = [tweet objectForKey:@"user"];
                                 [userNameArray addObject:[user objectForKey:@"screen_name"]];
