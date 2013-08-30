@@ -426,69 +426,11 @@
                                                                        token:accessToken
                                                                        realm:nil
                                                            signatureProvider:nil];
-    //NSMutableArray *params = [NSMutableArray array];
-	
-	//NSDictionary *params = [NSDictionary dictionaryWithObject:@"1" forKey:@"include_entities"];
-    //[params addObject:[OARequestParameter requestParameter:@"format" value:@"json"]];
+
 	[request setHTTPMethod:@"GET"];
-    //[request setHTTPBody:[params dataUsingEncoding:NSUTF8StringEncoding]];
-	//[request setParameters:params];
+
 	[request prepare];
-//    NSLog(@"%@",request.URL);
-	
-//	NSURLResponse *response;
-//	NSError *error = nil;
-    
-   
-//	NSData *result = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
-//	NSLog(@"result: %@", [[NSString alloc] initWithData:result encoding:NSUTF8StringEncoding]);
-//    if (result) {
-//        NSError *jsonError;
-//        NSString *jstr = [[NSString alloc] initWithData:result encoding:NSUTF8StringEncoding];
-//        NSString *cricket_left = @"[";
-//        NSString *cricket_right = @"]";
-//        jstr = [[cricket_left stringByAppendingString:jstr] stringByAppendingString:cricket_right];
-//        NSLog(@"%@",jstr);
-//        NSData *json_data = [jstr dataUsingEncoding:NSUnicodeStringEncoding];
-//        NSLog(@"%@",json_data);
-//        
-//        NSArray *searchArray = [NSJSONSerialization JSONObjectWithData:json_data
-//                                                               options:NSJSONReadingAllowFragments error:&jsonError];
-//        NSLog(@"%@",searchArray);
-//        NSLog(@"%d",[searchArray count]);
-//        NSLog(@"%@",searchArray[0]);
-//        NSLog(@"%@",searchArray[1]);
-//        if(result){
-//            //NSString *output = [NSString stringWithFormat:@"HTTP response status: %ld",(long)[urlResponse statusCode]];
-//            //        NSLog(@"%@", output);
-//            //        NSLog(@"%@",urlResponse);
-//            //NSLog(@"%@",timeline);
-//            for (NSDictionary *tweet in searchArray) {
-//                NSLog(@"%@",tweet);
-//                NSLog(@"%@",[tweet objectForKey:@"text"]);
-//                NSLog(@"%@",[tweet objectForKey:@"user"]);
-//                NSLog(@"%@",[tweet allKeys]);
-//                NSLog(@"%@",[tweet allValues]);
-//               //NSDictionary *statuses = [tweet objectForKey:@"statuses"];
-//               //[tweetTextArray addObject:[statuses objectForKey:@"text"]];
-//               NSDictionary *user = [tweet objectForKey:@"user"];
-//               [userNameArray addObject:[user objectForKey:@"screen_name"]];
-//               [tweetIconArray addObject:[user objectForKey:@"profile_image_url"]];
-//               // つぶやきダンプ
-//               //NSLog(@"%@",[statuses objectForKey:@"statuses"]);
-//               NSLog(@"%@",[user objectForKey:@"screen_name"]);
-//               NSLog(@"%@",[user objectForKey:@"profile_image_url"]);
-//               NSLog(@"%lu",(unsigned long)[tweetIconArray count]);
-//            }
-//            //                            firstloaded = YES;
-//            tweetreloaded = YES;
-//            [self.tableView reloadData];
-//        }else{
-//            NSLog(@"error: %@",jsonError);
-//        }
-//    }else{
-//        NSLog(@"error: %@", error);
-//    }
+
     
     [request setHTTPMethod:@"GET"];
     OADataFetcher *fetcher = [[OADataFetcher alloc] init];
@@ -508,26 +450,13 @@
 //    NSLog(@"%@",searchData);
     NSError *jsonError;
     NSString *jstr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-//    NSString *cricket_left = @"[";
-//    NSString *cricket_right = @"]";
-//    jstr = [[cricket_left stringByAppendingString:jstr] stringByAppendingString:cricket_right];
-//    NSLog(@"%@",jstr);
+
     NSData *json_data = [jstr dataUsingEncoding:NSUnicodeStringEncoding];
 //    NSLog(@"%@",json_data);
     
     NSDictionary *searchDictinary = [NSJSONSerialization JSONObjectWithData:json_data
                                                             options:NSJSONReadingAllowFragments error:&jsonError];
-//    NSLog(@"%@",searchArray);
-//    NSLog(@"%d",[searchArray count]);
-    
-//    NSInputStream *twitterStream = [[NSInputStream alloc] initWithData:tweets];
-//    [twitterStream open];
-    
 
-//     NSError *parseError = nil;
-//        id jsonObject = [NSJSONSerialization JSONObjectWithData:json_data
-//                                                          options:NSJSONReadingAllowFragments error:&parseError];
-//        if ([jsonObject respondsToSelector:@selector(objectForKey:)]) {
      for (NSDictionary *tweet in [searchDictinary objectForKey:@"statuses"]) {
                 NSArray* allkeys = [tweet allKeys];
                 NSLog(@"%@",allkeys);
@@ -535,14 +464,14 @@
                 //15件分取得
                 if(tempcount < 15){
 //                    NSLog(@"%@: %@", key, [tweet objectForKey:key]);
-                      NSLog(@"%@",[tweet objectForKey:@"text"]);
+//                      NSLog(@"%@",[tweet objectForKey:@"text"]);
                      [tweetTextArray addObject:[tweet objectForKey:@"text"]];
                     tempcount += 1;
                     NSDictionary *user = [tweet objectForKey:@"user"];
                     [userNameArray addObject:[user objectForKey:@"screen_name"]];
                     [tweetIconArray addObject:[user objectForKey:@"profile_image_url"]];
-                    NSLog(@"%@",[user objectForKey:@"screen_name"]);
-                    NSLog(@"%@",[user objectForKey:@"profile_image_url"]);
+//                    NSLog(@"%@",[user objectForKey:@"screen_name"]);
+//                    NSLog(@"%@",[user objectForKey:@"profile_image_url"]);
                 }
 //         NSLog(@"%@",tweetTextArray);
       }
