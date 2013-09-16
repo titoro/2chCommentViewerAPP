@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5207D51217D329550049241F /* CVTweetManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5207D51117D329550049241F /* CVTweetManager.m */; };
 		5208A164177B9F5500B76980 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5208A163177B9F5500B76980 /* Social.framework */; };
 		520A600E174DCF76002D32E3 /* CVTweetView.m in Sources */ = {isa = PBXBuildFile; fileRef = 520A600D174DCF75002D32E3 /* CVTweetView.m */; };
 		520A6010174F2081002D32E3 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 520A600F174F2081002D32E3 /* Accounts.framework */; };
@@ -46,6 +47,7 @@
 		527B77571707CE68009D8187 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 527B77551707CE68009D8187 /* InfoPlist.strings */; };
 		527B775A1707CE68009D8187 /* _chCommentViewerAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 527B77591707CE68009D8187 /* _chCommentViewerAppTests.m */; };
 		527B77721707D351009D8187 /* CVChannelListController.m in Sources */ = {isa = PBXBuildFile; fileRef = 527B77711707D351009D8187 /* CVChannelListController.m */; };
+		5282444F17DC71FD004C3386 /* CVTweetDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5282444E17DC71FD004C3386 /* CVTweetDelegate.m */; };
 		5289C58E17AA51C80034F980 /* twitterConsKey.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5289C58D17AA51C80034F980 /* twitterConsKey.txt */; };
 		5289C59017AA56F10034F980 /* twitterSecretKey.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5289C58F17AA56F10034F980 /* twitterSecretKey.txt */; };
 		5289C59217AE256B0034F980 /* twitterConsKey.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5289C59117AE256A0034F980 /* twitterConsKey.xml */; };
@@ -68,6 +70,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5207D51017D329550049241F /* CVTweetManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVTweetManager.h; path = ../CVTweetManager.h; sourceTree = "<group>"; };
+		5207D51117D329550049241F /* CVTweetManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVTweetManager.m; path = ../CVTweetManager.m; sourceTree = "<group>"; };
 		5208A163177B9F5500B76980 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		520A600C174DCF75002D32E3 /* CVTweetView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CVTweetView.h; sourceTree = "<group>"; };
 		520A600D174DCF75002D32E3 /* CVTweetView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CVTweetView.m; sourceTree = "<group>"; };
@@ -137,6 +141,8 @@
 		527B77591707CE68009D8187 /* _chCommentViewerAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = _chCommentViewerAppTests.m; sourceTree = "<group>"; };
 		527B77701707D351009D8187 /* CVChannelListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVChannelListController.h; path = ../CVChannelListController.h; sourceTree = "<group>"; };
 		527B77711707D351009D8187 /* CVChannelListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVChannelListController.m; path = ../CVChannelListController.m; sourceTree = "<group>"; };
+		5282444D17DC71FD004C3386 /* CVTweetDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVTweetDelegate.h; path = ../CVTweetDelegate.h; sourceTree = "<group>"; };
+		5282444E17DC71FD004C3386 /* CVTweetDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVTweetDelegate.m; path = ../CVTweetDelegate.m; sourceTree = "<group>"; };
 		5289C58D17AA51C80034F980 /* twitterConsKey.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = twitterConsKey.txt; path = ../twitterConsKey.txt; sourceTree = "<group>"; };
 		5289C58F17AA56F10034F980 /* twitterSecretKey.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = twitterSecretKey.txt; sourceTree = "<group>"; };
 		5289C59117AE256A0034F980 /* twitterConsKey.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = twitterConsKey.xml; sourceTree = "<group>"; };
@@ -286,6 +292,10 @@
 				525AC17D1792ACC6007171B9 /* oauthconsumer-master-2 */,
 				5225D6DB17505E0F00706686 /* CVTweetTableViewController.h */,
 				5225D6DC17505E0F00706686 /* CVTweetTableViewController.m */,
+				5282444D17DC71FD004C3386 /* CVTweetDelegate.h */,
+				5282444E17DC71FD004C3386 /* CVTweetDelegate.m */,
+				5207D51017D329550049241F /* CVTweetManager.h */,
+				5207D51117D329550049241F /* CVTweetManager.m */,
 				523F638617801A0900AEEEFE /* CVTweetTagView.h */,
 				523F638717801A0900AEEEFE /* CVTweetTagView.m */,
 				520A600C174DCF75002D32E3 /* CVTweetView.h */,
@@ -483,6 +493,8 @@
 				525AC1B71792ACC7007171B9 /* OAServiceTicket.m in Sources */,
 				525AC1B91792ACC7007171B9 /* OAToken.m in Sources */,
 				525AC1BA1792ACC7007171B9 /* OATokenManager.m in Sources */,
+				5207D51217D329550049241F /* CVTweetManager.m in Sources */,
+				5282444F17DC71FD004C3386 /* CVTweetDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

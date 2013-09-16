@@ -8,9 +8,11 @@
 
 #import "CVChannelListController.h"
 //グローバル関数
-//test code
 //値受け渡しに書き換える
 NSString *touchedTable;
+//画面間のデータの受け渡しに関連参照
+//その為のキー
+static char selectedCellKey; //選択されたセルの値を保持するキー
 @interface CVChannelListController ()
 
 @end
@@ -20,6 +22,8 @@ NSString *touchedTable;
 @synthesize tableView;
 //不要？
 @synthesize touchedTableTweet = _touchedTableTweet;
+@synthesize cvTweetManager = _cvTweetManager;
+
 // 必要に応じて、初期化メソッドを追加または変更。
 - (id)initWithStyle:(UITableViewStyle)theStyle
 {
@@ -30,6 +34,16 @@ NSString *touchedTable;
     return self;
 }
 
+//初期化
+-(id)initWithDataManager:(CVTweetManager *)argcvTweetManager{
+    self = [super init];
+    if (self) {
+        
+        self.cvTweetManager = argcvTweetManager;
+        
+    }
+    return self;
+}
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,6 +52,17 @@ NSString *touchedTable;
     }
     return self;
 }
+
+//関連参照用のメソッド
+//現在使用していない
+//わかったら使用するか、削除するか判断
+// 選択されたセルの値の保持
+- (void)setSeletedCellKey:(NSString*)selectcell
+{
+    objc_setAssociatedObject(self, &selectedCellKey, selectcell,
+                             OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 
 -(void)loadView{
     //この下にビューの初期化処理
@@ -77,21 +102,6 @@ NSString *touchedTable;
     
     // 編集ボタンを追加。
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
-    /************test code**************/
-    /*
-    CVChannelTable* channelTableView = [[CVChannelTable alloc]initWithStyle:UITableViewCellStyleDefault];
-    //[channelTableView viewDidLoad];
-    channelTableView.tableView.delegate = self;
-    channelTableView.tableView.dataSource = self;
-    channelTableView.tableView.backgroundColor = [UIColor whiteColor];
-    NSLog(@"%@",channelTableView);
-     NSLog(@"%@",channelTableView.tableView);
-    NSLog(@"%@",self.view);
-    [self.view addSubview:channelTableView.tableView];
-    NSLog(@"%@",channelTableView);
-    NSLog(@"%@",channelTableView.tableView);
-    ***********************************/
     
 }
 
@@ -188,10 +198,24 @@ NSString *touchedTable;
     if ([str isEqualToString:twitterTimeline]) {
         // 行が選択された場合の処理。
         CVTweetView *cvTweetView = [[CVTweetView alloc]init];
+        //Managerクラスへ選択されたセルの文字列を格納
+        _cvTweetManager.touchedCell =  cell.textLabel.text;
+        
+        //AppDelegateへ格納
+//        AppDelegate *appDelegate;
+//        appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+//        appDelegate.touchedCell = cell.textLabel.text;
+        
+        
+//        CVTweetDelegate* cv = [[CVTweetDelegate alloc]init];
+//        //[cv touchedCell:cell.textLabel.text];
+        
         [self.navigationController pushViewController:cvTweetView animated:YES];
     }else{
         //Tweeterタイムラインセル選択時以外はタグ検索画面へ
         CVTweetTagView *cvTweetTagView = [[CVTweetTagView alloc]init];
+        cvTweetTagView.touchedCell = cell.textLabel.text;
+        
         [self.navigationController pushViewController:cvTweetTagView animated:YES];
     }
 }

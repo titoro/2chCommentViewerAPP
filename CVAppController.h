@@ -7,8 +7,10 @@
 //
 /* アプリコントローラ */
 #import <UIKit/UIKit.h>
+#import <CVChannelCell.h>
 
 @interface CVAppController : NSObject <UIApplicationDelegate>{
     
 }
 @end
+

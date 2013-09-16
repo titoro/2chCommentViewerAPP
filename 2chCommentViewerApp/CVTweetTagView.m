@@ -19,10 +19,24 @@
 @synthesize accountStore = _accountStore;
 @synthesize grantedAccounts = _grantedAccounts;
 @synthesize firstLoad = _firstLoad;
+@synthesize touchedCell = _touchedCell;
 //@synthesize accessToken = _accessToken;
 
 @synthesize tableView;
-@synthesize hashTag;
+@synthesize tag = _tag;
+@synthesize touchedTableTweet = _touchedTableTweet;
+@synthesize cvTweetManager = _cvTweetManager;
+
+//初期化
+-(id)initWithDataManager:(CVTweetManager *)argcvTweetManager{
+    self = [super init];
+    if (self) {
+        
+        self.cvTweetManager = argcvTweetManager;
+        
+    }
+    return self;
+}
 
 - (id)initWithStyle:(UITableViewStyle)theStyle
 {
@@ -42,20 +56,28 @@
     return self;
 }
 
+// 保持された非表示時フレームの取得
+//- (CGRect)hideFrame
+//{
+//    return [objc_getAssociatedObject(self, ) CGRectValue];
+//}
+
+
 -(void)loadView{
     //検索するハッシュタグを設定
     //test code
-    hashTag = @"あまちゃん";
-    firstloaded = NO;
-    
-    // サービスからアプリ用に割り当てられたKeyとSecret を設定
-    //処理の書き換え
-//    NSError* err1 = nil;
-//    NSError* err2 = nil;
-    
-//    NSString* kTwitterConsumerKey = [NSString stringWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterConsKey.txt" encoding:NSUTF8StringEncoding error:&err1];
+//    NSLog(@"%@",_cvTweetManager.touchedCell);
+//    CVTweetManager *cvTweetManater1 = [[CVTweetManager alloc ]init];
 //    
-//    NSString* kTwitterConsumerSecret = [NSString stringWithContentsOfFile:@"/Users/nanbahiroki/labo/2chCommentViewerApp/twitterSecretKey.txt" encoding:NSUTF8StringEncoding error:&err2];
+//    hashTag =  cvTweetManater1.touchedCell;
+
+//    hashTag = @"あまちゃん";
+    NSLog(@"%@",_touchedCell);
+    
+    //親画面から選択されたセル（検索文字）を設定
+    _tag = _touchedCell;
+    
+    firstloaded = NO;
 
     NSString *kTwitterConsumerKey;      //ConsumerKey
     NSString *kTwitterConsumerSecret;   //ConsumerSecretKey
@@ -231,6 +253,7 @@
     return nil;
 }
 
+//アクセストークンの取得
 - (void)_getAccessToken {
     
     NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/oauth/access_token"];
@@ -263,7 +286,7 @@
         
         //取得したアクセストークンをDefaultUserInfoへ保存 
         [_accessToken storeInUserDefaultsWithServiceProviderName:@"NAME" prefix:@"KEY"];
-        [self loadSearchTweet:hashTag];
+        [self loadSearchTweet:_tag];
     }
     
 }
@@ -388,7 +411,10 @@
 
     
     //検索結果を取得
-    NSString *urlString = @"https://api.twitter.com/1.1/search/tweets.json?q=あまちゃん&lang=ja";
+    NSString *str1 = @"https://api.twitter.com/1.1/search/tweets.json?q=";
+    NSString *urlString = [NSString stringWithFormat:@"%@%@%@",str1,_tag,@"&lang=ja"];
+//    NSString *urlString = @"https://api.twitter.com/1.1/search/tweets.json?q=あまちゃん&lang=ja";
+    NSLog(@"%@",urlString);
     
     // UTF-8でエンコード
     NSString *encodedString = [urlString stringByAddingPercentEscapesUsingEncoding:
@@ -528,7 +554,7 @@
             if (accounts != nil && [accounts count] != 0) {
                 ACAccount *twAccount = [accounts objectAtIndex:0];
                 NSString *string1 = @"https://api.twitter.com/1.1/search/tweets.json?q=";
-                NSString *urlStr = [NSString stringWithFormat:@"%@%@",string1,hashTag];
+                NSString *urlStr = [NSString stringWithFormat:@"%@%@",string1,_tag];
                 NSLog(@"%@",urlStr);
                 NSURL *url = [NSURL URLWithString:urlStr];
                 NSDictionary *params = [NSDictionary dictionaryWithObject:@"1" forKey:@"include_entities"];

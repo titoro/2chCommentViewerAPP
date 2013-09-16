@@ -20,10 +20,8 @@
 @end
 
 @implementation CVAppController
-
 //CVAppControllerの参照を入れておく共有static変数
 static CVAppController* _sharedInstance = nil;
-
 +(CVAppController *) sharedController{
     //共有static変数を返す
     return _sharedInstance;

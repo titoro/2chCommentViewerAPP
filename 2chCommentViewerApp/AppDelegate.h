@@ -9,8 +9,13 @@
 #import <UIKit/UIKit.h>
 #import "CVChannelListController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate>{
+    CVChannelListController* cvChannelListController;
+    NSString* touchedCell;
+}
+    
 
+@property (strong, nonatomic)NSString* touchedCell;
 @property (strong, nonatomic) UIWindow *window;
-@property (strong, nonatomic) CVChannelListController *cvChannelListController;
+@property (strong, nonatomic)CVChannelListController *cvChannelListController;
 @end

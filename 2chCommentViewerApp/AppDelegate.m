@@ -12,7 +12,7 @@
 
 @synthesize window = _window;
 @synthesize cvChannelListController = _cvChannelListController;
-
+@synthesize touchedCell = _touchedCell;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
