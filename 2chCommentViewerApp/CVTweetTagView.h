@@ -34,11 +34,11 @@
     int reloadIntarval;
     int adjestAtIndex;
     
-    
     OAConsumer *consumer;
     OAToken *requestToken;
     UIWebView *webTweetView;
     CVTweetManager* cvTweetManager;
+    
 }
 @property (strong,nonatomic) id touchedCellId;
 @property (strong,nonatomic) NSString *tag;             //検索単語（検索文字、ハッシュタグ文字)

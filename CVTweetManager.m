@@ -32,4 +32,48 @@
     self.namesArray = nil;
     //    [super dealloc];
 }
+
+@synthesize textPull, textRelease, textLoading, refreshHeaderView, refreshLabel, refreshArrow, refreshSpinner;
+
+- (id)initWithStyle:(UITableViewStyle)style {
+    //self = [super initWithStyle:style];
+    if (self != nil) {
+        [self setupStrings];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self != nil) {
+        [self setupStrings];
+    }
+    return self;
+}
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self != nil) {
+        [self setupStrings];
+    }
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    //[self addPullToRefreshHeader];
+}
+
+- (void)setupStrings{
+    textPull = @"Pull down to refresh...";
+    textRelease = @"Release to refresh...";
+    textLoading = @"Loading...";
+}
+
+- (void)refresh {
+    // This is just a demo. Override this method with your custom reload action.
+    // Don't forget to call stopLoading at the end.
+    [self performSelector:@selector(stopLoading) withObject:nil afterDelay:2.0];
+}
+
 @end
