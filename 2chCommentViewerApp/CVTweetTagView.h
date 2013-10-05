@@ -16,12 +16,13 @@
 #import "OAuthConsumer.h"
 #import "CVTweetManager.h"
 #import <objc/runtime.h>
+#import "PullRefreshTableViewController.h"
 
 //クラス変数
 @class CVTweetTagView;
 
 @interface CVTweetTagView : CVTweetManager<UITableViewDelegate,UITableViewDataSource,UIWebViewDelegate>{
-    CVTweetTableViewController *cvTweetTable;
+    CVTweetTableViewController *cvTweetTabSle;
     NSMutableArray *userNameArray;
     NSMutableArray *tweetTextArray;
     NSMutableArray *tweetIconArray;
@@ -50,6 +51,11 @@
 @property (atomic) BOOL firstLoad;
 @property (strong,nonatomic) OAToken *accessToken;
 @property (strong,atomic) NSString *touchedCell;
+
+@property (nonatomic, copy) NSString *textPull; // for "Pull down to refresh…"
+@property (nonatomic, copy) NSString *textRelease; // for "Release to refresh…"
+@property (nonatomic, copy) NSString *textLoading; // for "Loading..."
+
 
 - (UIImage *) makeThumbnailOfSize:(CGSize)size;
 //不要？

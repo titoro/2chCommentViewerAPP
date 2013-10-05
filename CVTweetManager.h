@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "PullRefreshTableViewController.h"
 
 @interface CVTweetManager : UIViewController{
     NSString* touched;

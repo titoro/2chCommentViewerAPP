@@ -91,33 +91,43 @@
         kTwitterConsumerSecret = kTwitterConsKeyArray[1];
     }
     
+    //AccessTokenをDefaultUserInfoから読み込み
+    OAToken *accessToken =[[OAToken alloc] initWithUserDefaultsUsingServiceProviderName:@"NAME"
+                              
+                                                                                    prefix:@"KEY"];
+    NSLog(@"%@",accessToken);
+    
 //    NSLog(@"%@",kTwitterConsumerKey);
 //    NSLog(@"%@",kTwitterConsumerSecret);
     
     consumer = [[OAConsumer alloc] initWithKey:kTwitterConsumerKey
-                                                    secret:kTwitterConsumerSecret];
+                                            secret:kTwitterConsumerSecret];
+    if(accessToken){
+        [self loadSearchTweet:_tag];
+    }
 //    NSLog(@"%@",consumer);
     
-    OADataFetcher *fetcher = [[OADataFetcher alloc] init];
-    
-    NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token"];
-    
-    OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
-                                                                   consumer:consumer
-                                                                      token:nil
-                                                                      realm:nil
-                                                          signatureProvider:nil];
-    
-//    NSLog(@"%@",request);
-    [request setHTTPMethod:@"POST"];
-//    NSLog(@"%@",request);
-    
-    [fetcher fetchDataWithRequest:request
-                         delegate:self
-                didFinishSelector:@selector(requestTokenTicket:didFinishWithData:)
-                  didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
-//    NSLog(@"%@",fetcher);
-    
+    else{
+        OADataFetcher *fetcher = [[OADataFetcher alloc] init];
+        
+        NSURL *url = [NSURL URLWithString:@"https://api.twitter.com/oauth/request_token"];
+        
+        OAMutableURLRequest *request = [[OAMutableURLRequest alloc] initWithURL:url
+                                                                       consumer:consumer
+                                                                          token:nil
+                                                                          realm:nil
+                                                              signatureProvider:nil];
+        
+        //    NSLog(@"%@",request);
+        [request setHTTPMethod:@"POST"];
+        //    NSLog(@"%@",request);
+        
+        [fetcher fetchDataWithRequest:request
+                             delegate:self
+                    didFinishSelector:@selector(requestTokenTicket:didFinishWithData:)
+                      didFailSelector:@selector(requestTokenTicket:didFailWithError:)];
+        //    NSLog(@"%@",fetcher);
+    }
 }
 
 - (void)viewDidLoad
@@ -483,7 +493,7 @@
     NSDictionary *searchDictinary = [NSJSONSerialization JSONObjectWithData:json_data
                                                             options:NSJSONReadingAllowFragments error:&jsonError];
 
-     for (NSDictionary *tweet in [searchDictinary objectForKey:@"statuses"]) {
+    for (NSDictionary *tweet in [searchDictinary objectForKey:@"statuses"]) {
                 NSArray* allkeys = [tweet allKeys];
                 NSLog(@"%@",allkeys);
                 int tempcount = 0;
@@ -627,6 +637,14 @@
     if(newThumbnail == nil)
         NSLog(@"could not scale image");
     return newThumbnail;
+}
+
+//PullRefreshTableViewController refreshメソッドオーバーライド
+- (void)refresh {
+    // This is just a demo. Override this method with your custom reload action.
+    // Don't forget to call stopLoading at the end.
+    //2秒間止めさせる
+    [self performSelector:@selector(stopLoading) withObject:nil afterDelay:2.0];
 }
 
 @end

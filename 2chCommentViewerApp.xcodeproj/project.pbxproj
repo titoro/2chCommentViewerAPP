@@ -52,6 +52,10 @@
 		5289C59017AA56F10034F980 /* twitterSecretKey.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5289C58F17AA56F10034F980 /* twitterSecretKey.txt */; };
 		5289C59217AE256B0034F980 /* twitterConsKey.xml in Resources */ = {isa = PBXBuildFile; fileRef = 5289C59117AE256A0034F980 /* twitterConsKey.xml */; };
 		528D970117BDC51300CA08C1 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 528D970017BDC51300CA08C1 /* libxml2.dylib */; };
+		52BA5A7F17FFA68D00CE6431 /* arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = 52BA5A7E17FFA68D00CE6431 /* arrow.png */; };
+		52BA5A8217FFA6B700CE6431 /* PullRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BA5A8117FFA6B700CE6431 /* PullRefreshTableViewController.m */; };
+		52BA5A8417FFA70600CE6431 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52BA5A8317FFA70600CE6431 /* QuartzCore.framework */; };
+		52BA5A8617FFA92900CE6431 /* PullRefreshTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BA5A8117FFA6B700CE6431 /* PullRefreshTableViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		52FD0FD01708BA9F00C9CC34 /* CVAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FD0FCF1708BA9F00C9CC34 /* CVAppController.m */; };
 		52FD0FD41708C2A300C9CC34 /* CVChannel.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FD0FD31708C2A300C9CC34 /* CVChannel.m */; };
 		52FD0FD71708E82B00C9CC34 /* CVChannelManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52FD0FD61708E82B00C9CC34 /* CVChannelManager.m */; };
@@ -147,6 +151,10 @@
 		5289C58F17AA56F10034F980 /* twitterSecretKey.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = twitterSecretKey.txt; sourceTree = "<group>"; };
 		5289C59117AE256A0034F980 /* twitterConsKey.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = twitterConsKey.xml; sourceTree = "<group>"; };
 		528D970017BDC51300CA08C1 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
+		52BA5A7E17FFA68D00CE6431 /* arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = arrow.png; sourceTree = "<group>"; };
+		52BA5A8017FFA6B700CE6431 /* PullRefreshTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PullRefreshTableViewController.h; sourceTree = "<group>"; };
+		52BA5A8117FFA6B700CE6431 /* PullRefreshTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PullRefreshTableViewController.m; sourceTree = "<group>"; };
+		52BA5A8317FFA70600CE6431 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		52FD0FCE1708BA9F00C9CC34 /* CVAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVAppController.h; path = ../CVAppController.h; sourceTree = "<group>"; };
 		52FD0FCF1708BA9F00C9CC34 /* CVAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = CVAppController.m; path = ../CVAppController.m; sourceTree = "<group>"; };
 		52FD0FD21708C2A300C9CC34 /* CVChannel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = CVChannel.h; path = ../CVChannel.h; sourceTree = "<group>"; };
@@ -164,6 +172,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52BA5A8417FFA70600CE6431 /* QuartzCore.framework in Frameworks */,
 				528D970117BDC51300CA08C1 /* libxml2.dylib in Frameworks */,
 				5208A164177B9F5500B76980 /* Social.framework in Frameworks */,
 				520A6012174F2090002D32E3 /* Twitter.framework in Frameworks */,
@@ -253,6 +262,7 @@
 		527B77251707CE68009D8187 = {
 			isa = PBXGroup;
 			children = (
+				52BA5A8317FFA70600CE6431 /* QuartzCore.framework */,
 				528D970017BDC51300CA08C1 /* libxml2.dylib */,
 				525AC13C1792AB83007171B9 /* README */,
 				5208A163177B9F5500B76980 /* Social.framework */,
@@ -292,6 +302,8 @@
 				525AC17D1792ACC6007171B9 /* oauthconsumer-master-2 */,
 				5225D6DB17505E0F00706686 /* CVTweetTableViewController.h */,
 				5225D6DC17505E0F00706686 /* CVTweetTableViewController.m */,
+				52BA5A8017FFA6B700CE6431 /* PullRefreshTableViewController.h */,
+				52BA5A8117FFA6B700CE6431 /* PullRefreshTableViewController.m */,
 				5282444D17DC71FD004C3386 /* CVTweetDelegate.h */,
 				5282444E17DC71FD004C3386 /* CVTweetDelegate.m */,
 				5207D51017D329550049241F /* CVTweetManager.h */,
@@ -325,6 +337,7 @@
 		527B773B1707CE68009D8187 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				52BA5A7E17FFA68D00CE6431 /* arrow.png */,
 				527B773C1707CE68009D8187 /* 2chCommentViewerApp-Info.plist */,
 				527B773D1707CE68009D8187 /* InfoPlist.strings */,
 				527B77401707CE68009D8187 /* main.m */,
@@ -430,6 +443,7 @@
 				5289C58E17AA51C80034F980 /* twitterConsKey.txt in Resources */,
 				5289C59017AA56F10034F980 /* twitterSecretKey.txt in Resources */,
 				5289C59217AE256B0034F980 /* twitterConsKey.xml in Resources */,
+				52BA5A7F17FFA68D00CE6431 /* arrow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +478,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52BA5A8617FFA92900CE6431 /* PullRefreshTableViewController.m in Sources */,
 				527B77411707CE68009D8187 /* main.m in Sources */,
 				527B77451707CE68009D8187 /* AppDelegate.m in Sources */,
 				527B77721707D351009D8187 /* CVChannelListController.m in Sources */,
@@ -503,6 +518,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				527B775A1707CE68009D8187 /* _chCommentViewerAppTests.m in Sources */,
+				52BA5A8217FFA6B700CE6431 /* PullRefreshTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

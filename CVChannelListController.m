@@ -201,6 +201,8 @@ static char selectedCellKey; //選択されたセルの値を保持するキー
         //Managerクラスへ選択されたセルの文字列を格納
         _cvTweetManager.touchedCell =  cell.textLabel.text;
         
+        //testTableView *prtv = [[testTableView alloc]init];
+        
         //AppDelegateへ格納
 //        AppDelegate *appDelegate;
 //        appDelegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -211,6 +213,7 @@ static char selectedCellKey; //選択されたセルの値を保持するキー
 //        //[cv touchedCell:cell.textLabel.text];
         
         [self.navigationController pushViewController:cvTweetView animated:YES];
+        //[self.navigationController pushViewController:prtv animated:YES];
     }else{
         //Tweeterタイムラインセル選択時以外はタグ検索画面へ
         CVTweetTagView *cvTweetTagView = [[CVTweetTagView alloc]init];

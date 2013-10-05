@@ -14,6 +14,8 @@
 #import "CVTweetManager.h"
 #import <objc/runtime.h>
 #import "CVTweetDelegate.h"
+#import "PullRefreshTableViewController.h"
+#import "testTableView.h"
 @protocol CVTweetDelegate;
 
 @interface CVChannelListController : CVTweetManager<UITableViewDelegate,UITableViewDataSource>{
