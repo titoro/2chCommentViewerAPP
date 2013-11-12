@@ -342,8 +342,8 @@
 {
     //#warning Incomplete method implementation.
     //Return the number of rows in the section.
-    //最初の場合のみ15個生成
-    //その後取得した分だけ拡張する
+    //中身がない場合15個生成
+    //中身がある場合その分確保する
     if (tweetTextArray.count == 0) {
         return 15;
     }
