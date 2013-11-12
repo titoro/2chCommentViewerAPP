@@ -68,14 +68,7 @@
 
 -(void)loadView{
     //検索するハッシュタグを設定
-    //test code
-//    NSLog(@"%@",_cvTweetManager.touchedCell);
-//    CVTweetManager *cvTweetManater1 = [[CVTweetManager alloc ]init];
-//    
-//    hashTag =  cvTweetManater1.touchedCell;
-
-//    hashTag = @"あまちゃん";
-    NSLog(@"%@",_touchedCell);
+    //NSLog(@"%@",_touchedCell);
     
     //リロード処理の設定
     [self setupStrings];
@@ -348,9 +341,13 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     //#warning Incomplete method implementation.
-    // Return the number of rows in the section.
-    // 15件取得し表示する
-    return 15;
+    //Return the number of rows in the section.
+    //最初の場合のみ15個生成
+    //その後取得した分だけ拡張する
+    if (tweetTextArray.count == 0) {
+        return 15;
+    }
+    return tweetTextArray.count;
 }
 
 //Cell
@@ -441,8 +438,8 @@
     //検索結果を取得
     NSString *str1 = @"https://api.twitter.com/1.1/search/tweets.json?q=";
     NSString *urlString = [NSString stringWithFormat:@"%@%@%@",str1,_tag,@"&lang=ja"];
-//    NSString *urlString = @"https://api.twitter.com/1.1/search/tweets.json?q=あまちゃん&lang=ja";
-    NSLog(@"%@",urlString);
+    //NSString *urlString = @"https://api.twitter.com/1.1/search/tweets.json?q=あまちゃん&lang=ja";
+    //NSLog(@"%@",urlString);
     
     // UTF-8でエンコード
     NSString *encodedString = [urlString stringByAddingPercentEscapesUsingEncoding:
@@ -495,6 +492,7 @@
     
 }
 
+
 -(void)searchParth:(NSData *)result{
 }
 
@@ -512,24 +510,23 @@
                                                             options:NSJSONReadingAllowFragments error:&jsonError];
 
     for (NSDictionary *tweet in [searchDictinary objectForKey:@"statuses"]) {
-                NSArray* allkeys = [tweet allKeys];
-                NSLog(@"%@",allkeys);
+                //NSArray* allkeys = [tweet allKeys];
+                //NSLog(@"%@",allkeys);
                 int tempcount = 0;
                 //15件分取得
                 if(tempcount < 15){
 //                    NSLog(@"%@: %@", key, [tweet objectForKey:key]);
-//                      NSLog(@"%@",[tweet objectForKey:@"text"]);
+                      //NSLog(@"%@",[tweet objectForKey:@"text"]);
                      [tweetTextArray addObject:[tweet objectForKey:@"text"]];
                     tempcount += 1;
                     NSDictionary *user = [tweet objectForKey:@"user"];
                     [userNameArray addObject:[user objectForKey:@"screen_name"]];
                     [tweetIconArray addObject:[user objectForKey:@"profile_image_url"]];
-//                    NSLog(@"%@",[user objectForKey:@"screen_name"]);
-//                    NSLog(@"%@",[user objectForKey:@"profile_image_url"]);
+                    //NSLog(@"%@",[user objectForKey:@"screen_name"]);
+                    //NSLog(@"%@",[user objectForKey:@"profile_image_url"]);
                 }
-//         NSLog(@"%@",tweetTextArray);
       }
-
+    NSLog(@"%d",tweetTextArray.count);
 //        }
 //    } else {
 //        NSLog(@"Failed to open stream.");
@@ -543,6 +540,37 @@
     NSLog(@"%@",error);
 }
 
+//リロード処理。新規追加取得。
+-(void)reloadTweet{
+    /**
+     NSMutableArray *userNameArray
+     NSMutableArray *tweetTextArray
+     NSMutableArray *tweetIconArray
+     の更新
+     **/
+    
+    //Twitterに再検索
+    [self loadSearchTweet:_tag];
+    
+}
+
+// ソート処理
+- (void)arraySort{
+    // NSSetに配列を格納し、重複オブジェクトを排除
+    //このNSSetは順番を保持しない為今回使用出来ない。
+    /*
+    NSSet *aSet = [NSSet setWithArray:tweetTextArray];
+    
+    //for (NSString* str in aSet) {
+    //    NSLog(@"%@",str);
+    //}
+    // 重複オブジェクトを排除したものを配列へ格納
+    //tweetTextArray = (NSMutableArray *)[aSet allObjects];
+    */
+    
+    NSLog(@"%d",tweetTextArray.count);
+}
+
 // 今回あんまり関係ないけど通信のお約束処理
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSHTTPURLResponse *)response
 {
@@ -552,74 +580,6 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
 //    [self.responseData appendData:data];
-}
-
-//Twitterのタグ検索を取得する
-/***********************こちらは現在使用していない**************************/
--(void)loadTagTweet:(NSString *)str{
-    
-    //リロードフラグをNOにする
-    if (tweetreloaded) {
-        tweetreloaded = NO;
-    }
-    
-    //ACAccountStoreオブジェクトを生成
-    _accountStore = [[ACAccountStore alloc] init];
-    
-    //TwitterのACAccountTypeオブジェクトを取得し、それを元にアカウントを取得
-    ACAccountType *accountType = [_accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
-    NSArray *accounts = [_accountStore accountsWithAccountType:accountType];
-//    NSLog(@"%@",accounts);
-    if (accounts.count == 0) {
-        NSLog(@"Please add twitter account on Settings");
-        return;
-    }
-    
-    [_accountStore requestAccessToAccountsWithType:accountType options:nil completion:^(BOOL granted, NSError *error) {
-        if(granted){
-            NSArray *accounts = [self->_accountStore accountsWithAccountType:accountType];
-            
-            if (accounts != nil && [accounts count] != 0) {
-                ACAccount *twAccount = [accounts objectAtIndex:0];
-                NSString *string1 = @"https://api.twitter.com/1.1/search/tweets.json?q=";
-                NSString *urlStr = [NSString stringWithFormat:@"%@%@",string1,_tag];
-                NSLog(@"%@",urlStr);
-                NSURL *url = [NSURL URLWithString:urlStr];
-                NSDictionary *params = [NSDictionary dictionaryWithObject:@"1" forKey:@"include_entities"];
-                SLRequest *request = [SLRequest requestForServiceType:SLServiceTypeTwitter requestMethod:SLRequestMethodGET URL:url parameters:params];
-                request.account = twAccount;
-                [request performRequestWithHandler:^(NSData *responseData, NSHTTPURLResponse *urlResponse, NSError *error) {
-                    NSLog(@"%@",urlResponse);
-                    if (urlResponse){
-                        NSError *jsonError;
-                        NSArray *timeline = [NSJSONSerialization JSONObjectWithData:responseData options:NSJSONReadingMutableLeaves error:&jsonError];
-                        if(timeline){
-                            NSString *output = [NSString stringWithFormat:@"HTTP response status: %ld",(long)[urlResponse statusCode]];
-                            NSLog(@"%@", output);
-                            NSLog(@"%@",urlResponse);
-                            //NSLog(@"%@",timeline);
-                            for (NSDictionary *tweet in timeline) {
-                                [tweetTextArray addObject:[tweet objectForKey:@"text"]];
-                                NSDictionary *user = [tweet objectForKey:@"user"];
-                                [userNameArray addObject:[user objectForKey:@"screen_name"]];
-                                [tweetIconArray addObject:[user objectForKey:@"profile_image_url"]];
-                                // つぶやきダンプ
-                                NSLog(@"%@",tweet);
-                                NSLog(@"%@",[user objectForKey:@"screen_name"]);
-                                NSLog(@"%@",[user objectForKey:@"profile_image_url"]);
-                                NSLog(@"%lu",(unsigned long)[tweetIconArray count]);
-                            }
-                            //                            firstloaded = YES;
-                            tweetreloaded = YES;
-                            [self.tableView reloadData];
-                        }else{
-                            NSLog(@"error: %@",jsonError);
-                        }
-                    }
-                }];
-            }
-        }
-    }];
 }
 
 // セルの高さを返す. セルが生成される前に実行されるので独自に計算する必要がある
@@ -656,6 +616,8 @@
         NSLog(@"could not scale image");
     return newThumbnail;
 }
+
+
 
 /******************PullRefreshTableViewController オーバーライド************************/
 - (void)refresh {
@@ -737,6 +699,9 @@
         [refreshSpinner startAnimating];
     }];
     
+    //Twitterの再検索処理
+    [self reloadTweet];
+    [self arraySort];
     // Refresh action!
     [self refresh];
 }

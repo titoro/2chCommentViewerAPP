@@ -56,7 +56,8 @@
 @property (nonatomic, copy) NSString *textRelease; // for "Release to refresh…"
 @property (nonatomic, copy) NSString *textLoading; // for "Loading..."
 
-
+-(void)reloadTweet;          //リロード処理　データを新規取得し追加格納
+-(void)arraySort;            //配列の重複要素を削除（時間で自動的にソートされている為ソートはしない）
 - (UIImage *) makeThumbnailOfSize:(CGSize)size;
 //不要？
 @property (strong, nonatomic) NSString *touchedTableTweet;
